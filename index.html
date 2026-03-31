@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mural Lab — South Dakota State University</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f1f3d;
+  --navy-mid: #1a3260;
+  --navy-light: #2a4a8a;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --cream: #f8f5f0;
+  --white: #ffffff;
+  --text: #0f1f3d;
+  --text-muted: #5a6a8a;
+  --border: #d8dde8;
+  --bg-light: #f4f6fb;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--white);
+  overflow-x: hidden;
+}
+
+/* ─── NAVIGATION ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(15, 31, 61, 0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  cursor: pointer;
+  letter-spacing: 0.02em;
+}
+
+.nav-logo span { color: var(--gold); }
+
+.nav-links {
+  display: flex;
+  gap: 0;
+  list-style: none;
+}
+
+.nav-links li a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+  color: var(--gold);
+}
+
+/* ─── PAGE SYSTEM ─── */
+.page { display: none; padding-top: 64px; min-height: 100vh; }
+.page.active { display: block; }
+
+/* ─── HERO ─── */
+.hero {
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+  padding: 7rem 2rem 5rem;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -30%; right: -10%;
+  width: 60%; height: 120%;
+  background: radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--white));
+}
+
+.hero-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.8;
+  max-width: 520px;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s forwards;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  padding: 0.8rem 2rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 2px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, transform 0.15s;
+  text-transform: uppercase;
+}
+
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 0.8rem 2rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  border-radius: 2px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: border-color 0.2s, color 0.2s;
+  text-transform: uppercase;
+}
+
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+.hero-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 4px;
+  padding: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+}
+
+.hero-card-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.stat { text-align: center; padding: 1rem; background: rgba(255,255,255,0.04); border-radius: 2px; }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+}
+.stat-label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.25rem;
+}
+
+/* ─── SECTION COMMON ─── */
+.section {
+  padding: 5rem 2rem;
+}
+
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  max-width: 640px;
+  font-weight: 300;
+}
+
+.divider {
+  width: 48px;
+  height: 3px;
+  background: var(--gold);
+  margin: 1.5rem 0;
+}
+
+/* ─── HOME: RESEARCH AREAS ─── */
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.research-card {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.research-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 0;
+  background: var(--gold);
+  transition: height 0.3s;
+}
+
+.research-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+.research-card:hover::before { height: 100%; }
+
+.rc-icon {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.rc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.6rem;
+}
+
+.rc-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ─── HOME: PI HIGHLIGHT ─── */
+.pi-section {
+  background: var(--navy);
+  padding: 5rem 2rem;
+}
+
+.pi-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.pi-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+  border: 2px solid rgba(201,168,76,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.pi-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.pi-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+
+.pi-role {
+  font-size: 0.9rem;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+
+.pi-bio {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.9;
+  font-weight: 300;
+}
+
+/* ─── PEOPLE PAGE ─── */
+.page-hero {
+  background: var(--navy);
+  padding: 4rem 2rem 3rem;
+}
+
+.page-hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-hero-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.page-hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--white);
+}
+
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.people-card {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.people-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(15,31,61,0.12);
+}
+
+.people-avatar {
+  height: 180px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  color: var(--gold);
+}
+
+.people-info {
+  padding: 1.4rem;
+}
+
+.people-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.2rem;
+}
+
+.people-role {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.people-dept {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ─── PI CARD (full) ─── */
+.pi-card-full {
+  background: var(--navy);
+  border-radius: 4px;
+  padding: 2.5rem;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  margin-bottom: 3rem;
+}
+
+.pi-card-full .pi-avatar {
+  width: 160px;
+  height: 160px;
+  font-size: 2.8rem;
+}
+
+/* ─── RESEARCH PAGE ─── */
+.research-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.research-area:last-child { border-bottom: none; }
+.research-area:nth-child(even) .ra-text { order: 2; }
+.research-area:nth-child(even) .ra-visual { order: 1; }
+
+.ra-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.ra-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 1rem;
+}
+
+.ra-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.9;
+  font-weight: 300;
+}
+
+.ra-visual {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  border-radius: 4px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+}
+
+.ra-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+}
+
+.ra-tag {
+  background: var(--bg-light);
+  color: var(--navy);
+  border: 1px solid var(--border);
+  padding: 0.25rem 0.75rem;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.05em;
+}
+
+/* ─── PUBLICATIONS ─── */
+.pub-list { margin-top: 2.5rem; }
+
+.pub-year-group { margin-bottom: 3rem; }
+
+.pub-year {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--navy);
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+
+.pub-item {
+  padding: 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.pub-item:hover { border-color: var(--gold); }
+
+.pub-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+  line-height: 1.4;
+}
+
+.pub-authors {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.pub-journal {
+  font-size: 0.82rem;
+  color: var(--gold);
+  font-style: italic;
+  font-family: 'DM Mono', monospace;
+}
+
+.pub-badge {
+  position: absolute;
+  top: 1.4rem; right: 1.4rem;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 0.65rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ─── NEWS ─── */
+.news-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.news-card {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.news-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(15,31,61,0.1);
+}
+
+.news-card-img {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+.news-card-img.green { background: linear-gradient(135deg, #1a5c3a, #2d8a5e); }
+.news-card-img.navy { background: linear-gradient(135deg, var(--navy), var(--navy-light)); }
+.news-card-img.gold { background: linear-gradient(135deg, #6b4c1a, #a8742c); }
+.news-card-img.mid { background: linear-gradient(135deg, #1a3c6b, #2a5cb0); }
+
+.news-card-body { padding: 1.4rem; }
+
+.news-date {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.news-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.4;
+  margin-bottom: 0.6rem;
+}
+
+.news-excerpt {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ─── PROJECTS ─── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.project-card {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.project-card:hover { transform: translateY(-3px); border-color: var(--gold); }
+
+.project-card::after {
+  content: attr(data-num);
+  position: absolute;
+  bottom: -0.5rem; right: 1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--bg-light);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.proj-status {
+  display: inline-block;
+  background: #eaf5ee;
+  color: #1a6b35;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.proj-status.ongoing { background: #eaf5ee; color: #1a6b35; }
+.proj-status.new { background: #fdf5e6; color: #8a5a0a; }
+
+.proj-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.8rem;
+  line-height: 1.3;
+}
+
+.proj-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+.proj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.proj-tag {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  color: var(--navy);
+  font-size: 0.72rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ─── CONTACT ─── */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-top: 3rem;
+}
+
+.contact-info-block {
+  margin-bottom: 2rem;
+}
+
+.contact-info-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.contact-info-value {
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.form-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: 'DM Mono', monospace;
+}
+
+.form-input,
+.form-textarea {
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 0.75rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.form-input:focus,
+.form-textarea:focus { border-color: var(--navy-light); }
+
+.form-textarea { height: 140px; resize: vertical; }
+
+.form-submit {
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  padding: 0.9rem 2rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+
+.form-submit:hover { background: var(--navy-light); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--navy);
+  padding: 3rem 2rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.footer-logo span { color: var(--gold); }
+
+.footer-text { font-size: 0.82rem; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .hero-grid, .pi-inner, .pi-card-full, .contact-layout { grid-template-columns: 1fr; }
+  .research-grid, .people-grid, .news-grid, .projects-grid { grid-template-columns: 1fr; }
+  .research-area { grid-template-columns: 1fr; }
+  .research-area:nth-child(even) .ra-text, .research-area:nth-child(even) .ra-visual { order: unset; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">Mural <span>Lab</span></div>
+    <ul class="nav-links">
+      <li><a href="#" class="active" onclick="showPage('home')">Home</a></li>
+      <li><a href="#" onclick="showPage('people')">People</a></li>
+      <li><a href="#" onclick="showPage('research')">Research</a></li>
+      <li><a href="#" onclick="showPage('publications')">Publications</a></li>
+      <li><a href="#" onclick="showPage('news')">News</a></li>
+      <li><a href="#" onclick="showPage('projects')">Projects</a></li>
+      <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <div class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">South Dakota State University</div>
+        <h1>Mural <em>Lab</em></h1>
+        <p class="hero-desc">
+          We decode the genetic architecture of complex traits in plants — combining quantitative genetics, genomics, and computational tools to accelerate crop improvement and build a more resilient agricultural future.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="showPage('research')">Our Research</button>
+          <button class="btn-outline" onclick="showPage('people')">Meet the Team</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-title">Lab at a glance</div>
+        <div class="stat-row">
+          <div class="stat"><span class="stat-num">6</span><div class="stat-label">Lab Members</div></div>
+          <div class="stat"><span class="stat-num">2</span><div class="stat-label">Focus Areas</div></div>
+          <div class="stat"><span class="stat-num">4</span><div class="stat-label">Active Projects</div></div>
+          <div class="stat"><span class="stat-num">SDSU</span><div class="stat-label">Institution</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Research highlights -->
+  <div class="section">
+    <div class="section-inner">
+      <div class="section-label">What we do</div>
+      <h2 class="section-title">Research Focus Areas</h2>
+      <div class="divider"></div>
+      <p class="section-subtitle">Our lab integrates statistical genetics, high-throughput phenotyping, and genomic data analysis to understand how genetic variation shapes plant growth, development, and stress response.</p>
+
+      <div class="research-grid">
+        <div class="research-card" onclick="showPage('research')">
+          <span class="rc-icon">🧬</span>
+          <div class="rc-title">Quantitative Genetics</div>
+          <p class="rc-desc">Dissecting the genetic basis of complex, quantitative traits using GWAS, QTL mapping, and genomic prediction models in major crop species.</p>
+        </div>
+        <div class="research-card" onclick="showPage('research')">
+          <span class="rc-icon">🌱</span>
+          <div class="rc-title">Plant Genomics</div>
+          <p class="rc-desc">Leveraging large-scale genomic datasets to understand gene function, population structure, and evolutionary dynamics in plants.</p>
+        </div>
+        <div class="research-card" onclick="showPage('research')">
+          <span class="rc-icon">📊</span>
+          <div class="rc-title">Computational Tools</div>
+          <p class="rc-desc">Developing and applying bioinformatics pipelines, machine learning methods, and statistical frameworks to analyze complex biological datasets.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PI highlight -->
+  <div class="pi-section">
+    <div class="pi-inner">
+      <div class="pi-avatar">RM</div>
+      <div>
+        <div class="pi-label">Principal Investigator</div>
+        <div class="pi-name">Dr. Ravi V. Mural</div>
+        <div class="pi-role">Department of Agronomy, Horticulture and Plant Science · SDSU</div>
+        <p class="pi-bio">
+          Dr. Mural leads the Mural Lab at South Dakota State University, where his team focuses on the genetic dissection of complex traits in crop plants. His research integrates quantitative genetics, plant genomics, and computational biology to uncover the genetic architecture underlying agronomically important traits — with the goal of accelerating crop breeding programs and improving agricultural sustainability.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Latest news teaser -->
+  <div class="section" style="background: var(--bg-light);">
+    <div class="section-inner">
+      <div class="section-label">Updates</div>
+      <h2 class="section-title">Latest News</h2>
+      <div class="divider"></div>
+      <div class="news-grid">
+        <div class="news-card">
+          <div class="news-card-img navy">🎓</div>
+          <div class="news-card-body">
+            <div class="news-date">March 2025</div>
+            <div class="news-title">Mural Lab launches at South Dakota State University</div>
+            <p class="news-excerpt">We are excited to officially open our doors and begin our research program in quantitative genetics and plant genomics at SDSU.</p>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-card-img green">🌿</div>
+          <div class="news-card-body">
+            <div class="news-date">March 2025</div>
+            <div class="news-title">Welcome to our new graduate students!</div>
+            <p class="news-excerpt">Six graduate students join the lab — four PhD and two MS students — bringing diverse backgrounds in genetics, agronomy, and computational biology.</p>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:2rem;">
+        <button class="btn-primary" onclick="showPage('news')">All News</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Mural <span>Lab</span></div>
+      <div class="footer-text">Department of Agronomy, Horticulture and Plant Science · South Dakota State University · Brookings, SD</div>
+      <div class="footer-text">© 2025 Mural Lab · Ravi.Mural@sdstate.edu</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: PEOPLE
+══════════════════════════════════════════ -->
+<div class="page" id="page-people">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-label">The Team</div>
+      <h2>People</h2>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner">
+
+      <!-- PI -->
+      <div class="section-label">Principal Investigator</div>
+      <div class="divider"></div>
+      <div class="pi-card-full">
+        <div class="pi-avatar">RM</div>
+        <div>
+          <div class="pi-label">Principal Investigator</div>
+          <div class="pi-name">Dr. Ravi V. Mural</div>
+          <div class="pi-role" style="margin-bottom:1rem;">Assistant Professor · Agronomy, Horticulture and Plant Science</div>
+          <p class="pi-bio">
+            Dr. Mural's research focuses on the genetic dissection of complex traits in crop plants using quantitative genetics and genomics approaches. He is passionate about integrating computational biology with field-based phenotyping to advance crop improvement. He earned his PhD in genetics and leads an energetic team of graduate students working on cutting-edge problems in plant genetics.
+          </p>
+          <div style="margin-top:1rem;">
+            <span style="font-size:0.82rem;color:var(--gold);">✉ Ravi.Mural@sdstate.edu</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PhD Students -->
+      <div class="section-label" style="margin-top:3rem;">PhD Students</div>
+      <div class="divider"></div>
+      <div class="people-grid">
+        <div class="people-card">
+          <div class="people-avatar">EA</div>
+          <div class="people-info">
+            <div class="people-name">Ermias Assefa</div>
+            <div class="people-role">PhD Student</div>
+            <p class="people-dept">Quantitative genetics and genomic prediction in crop species.</p>
+          </div>
+        </div>
+        <div class="people-card">
+          <div class="people-avatar">SM</div>
+          <div class="people-info">
+            <div class="people-name">Shalma Maman</div>
+            <div class="people-role">PhD Student</div>
+            <p class="people-dept">GWAS and association mapping for complex agronomic traits.</p>
+          </div>
+        </div>
+        <div class="people-card">
+          <div class="people-avatar">PR</div>
+          <div class="people-info">
+            <div class="people-name">Prajwal R S</div>
+            <div class="people-role">PhD Student</div>
+            <p class="people-dept">Computational genomics and population genetics in plants.</p>
+          </div>
+        </div>
+        <div class="people-card">
+          <div class="people-avatar">SK</div>
+          <div class="people-info">
+            <div class="people-name">Shiva Kumar Reddy Mudedla</div>
+            <div class="people-role">PhD Student</div>
+            <p class="people-dept">Plant genomics and bioinformatics pipeline development.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MS Students -->
+      <div class="section-label" style="margin-top:3rem;">MS Students</div>
+      <div class="divider"></div>
+      <div class="people-grid">
+        <div class="people-card">
+          <div class="people-avatar">MH</div>
+          <div class="people-info">
+            <div class="people-name">Muragesh Mrutyunjaya Hiremath</div>
+            <div class="people-role">MS Student</div>
+            <p class="people-dept">Statistical genetics and trait mapping in crop plants.</p>
+          </div>
+        </div>
+        <div class="people-card">
+          <div class="people-avatar">PK</div>
+          <div class="people-info">
+            <div class="people-name">Preethi J Kabbakki</div>
+            <div class="people-role">MS Student</div>
+            <p class="people-dept">Genomic data analysis and machine learning applications in plant breeding.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Mural <span>Lab</span></div>
+      <div class="footer-text">© 2025 Mural Lab · South Dakota State University</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: RESEARCH
+══════════════════════════════════════════ -->
+<div class="page" id="page-research">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-label">Science</div>
+      <h2>Research</h2>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-inner">
+      <p class="section-subtitle" style="margin-bottom:0;">Our research sits at the intersection of quantitative genetics, plant genomics, and computational biology. We develop and apply cutting-edge approaches to understand how genetic variation shapes phenotypic diversity in plants — with a focus on traits relevant to crop improvement.</p>
+      <div class="divider"></div>
+
+      <div class="research-area">
+        <div class="ra-text">
+          <div class="ra-number">01</div>
+          <div class="ra-title">Quantitative Genetics</div>
+          <p class="ra-desc">We study the genetic basis of complex, polygenic traits — characteristics controlled by many genes working together with the environment. Using genome-wide association studies (GWAS), QTL mapping, and genomic selection models, we identify the genetic loci and pathways that drive variation in traits like yield, drought tolerance, and nutrient use efficiency. Our work spans both model and crop species, with a strong emphasis on translational applications in plant breeding.</p>
+          <div class="ra-tags">
+            <span class="ra-tag">GWAS</span>
+            <span class="ra-tag">QTL Mapping</span>
+            <span class="ra-tag">Genomic Selection</span>
+            <span class="ra-tag">Heritability</span>
+            <span class="ra-tag">Mixed Models</span>
+          </div>
+        </div>
+        <div class="ra-visual">🧬</div>
+      </div>
+
+      <div class="research-area">
+        <div class="ra-visual">🌱</div>
+        <div class="ra-text">
+          <div class="ra-number">02</div>
+          <div class="ra-title">Plant Genomics</div>
+          <p class="ra-desc">We leverage advances in sequencing and genomics to understand gene function, population structure, and evolutionary history in crop plants. By analyzing large-scale genomic datasets — including SNP arrays, whole-genome sequencing, and transcriptomics — we explore how genetic diversity is structured across populations and how it can be harnessed for crop improvement. We are particularly interested in the genomic basis of local adaptation and stress tolerance in major crops like maize, soybean, and sorghum.</p>
+          <div class="ra-tags">
+            <span class="ra-tag">Population Genomics</span>
+            <span class="ra-tag">Comparative Genomics</span>
+            <span class="ra-tag">SNP Analysis</span>
+            <span class="ra-tag">Transcriptomics</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="research-area">
+        <div class="ra-text">
+          <div class="ra-number">03</div>
+          <div class="ra-title">Computational Methods</div>
+          <p class="ra-desc">A core part of our work involves developing and applying bioinformatics pipelines and statistical models to handle the large datasets generated by modern genomics experiments. We use R, Python, and high-performance computing to build reproducible workflows for data analysis, visualization, and interpretation. We also explore machine learning approaches for genomic prediction and image-based phenotyping.</p>
+          <div class="ra-tags">
+            <span class="ra-tag">Bioinformatics</span>
+            <span class="ra-tag">Machine Learning</span>
+            <span class="ra-tag">R / Python</span>
+            <span class="ra-tag">HPC</span>
+            <span class="ra-tag">Data Visualization</span>
+          </div>
+        </div>
+        <div class="ra-visual">💻</div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Mural <span>Lab</span></div>
+      <div class="footer-text">© 2025 Mural Lab · South Dakota State University</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: PUBLICATIONS
+══════════════════════════════════════════ -->
+<div class="page" id="page-publications">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-label">Scholarly Work</div>
+      <h2>Publications</h2>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-inner">
+      <p class="section-subtitle">Selected publications from Dr. Mural and collaborators. For a complete list, visit <span style="color:var(--gold);cursor:pointer;">Google Scholar</span>.</p>
+      <div class="divider"></div>
+      <div class="pub-list">
+
+        <div class="pub-year-group">
+          <div class="pub-year">2024</div>
+          <div class="pub-item">
+            <span class="pub-badge">Journal</span>
+            <div class="pub-title">Genome-wide association study reveals novel loci for drought tolerance in maize</div>
+            <div class="pub-authors">Mural RV, Assefa E, et al.</div>
+            <div class="pub-journal">Plant Cell &amp; Environment · 2024</div>
+          </div>
+          <div class="pub-item">
+            <span class="pub-badge">Journal</span>
+            <div class="pub-title">Genomic prediction accuracy for yield-related traits in diverse sorghum panels</div>
+            <div class="pub-authors">Mural RV, et al.</div>
+            <div class="pub-journal">G3: Genes, Genomes, Genetics · 2024</div>
+          </div>
+        </div>
+
+        <div class="pub-year-group">
+          <div class="pub-year">2023</div>
+          <div class="pub-item">
+            <span class="pub-badge">Journal</span>
+            <div class="pub-title">Dissecting the genetic architecture of nitrogen use efficiency in maize using a multi-environment framework</div>
+            <div class="pub-authors">Mural RV, Yang J, et al.</div>
+            <div class="pub-journal">Theoretical and Applied Genetics · 2023</div>
+          </div>
+          <div class="pub-item">
+            <span class="pub-badge">Preprint</span>
+            <div class="pub-title">Machine learning approaches to genomic selection in plant breeding programs</div>
+            <div class="pub-authors">Mural RV, et al.</div>
+            <div class="pub-journal">bioRxiv · 2023</div>
+          </div>
+        </div>
+
+        <div class="pub-year-group">
+          <div class="pub-year">2022</div>
+          <div class="pub-item">
+            <span class="pub-badge">Journal</span>
+            <div class="pub-title">Population structure and local adaptation in a global collection of soybean germplasm</div>
+            <div class="pub-authors">Mural RV, et al.</div>
+            <div class="pub-journal">Nature Plants · 2022</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="warn" style="background:#f4f6fb;border-left:3px solid var(--navy);color:var(--text-muted);margin-top:2rem;">
+        📝 This is a placeholder publication list. Replace these entries with your actual publications by editing the publications page.
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Mural <span>Lab</span></div>
+      <div class="footer-text">© 2025 Mural Lab · South Dakota State University</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: NEWS
+══════════════════════════════════════════ -->
+<div class="page" id="page-news">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-label">Updates</div>
+      <h2>Lab News</h2>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-inner">
+      <div class="news-grid">
+
+        <div class="news-card">
+          <div class="news-card-img navy">🎓</div>
+          <div class="news-card-body">
+            <div class="news-date">March 2025</div>
+            <div class="news-title">Mural Lab officially opens at SDSU</div>
+            <p class="news-excerpt">We are thrilled to launch the Mural Lab in the Department of Agronomy, Horticulture and Plant Science at South Dakota State University. Our research program in quantitative genetics and plant genomics is now underway.</p>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-img green">🌿</div>
+          <div class="news-card-body">
+            <div class="news-date">March 2025</div>
+            <div class="news-title">Six graduate students join the lab</div>
+            <p class="news-excerpt">A warm welcome to Ermias, Shalma, Prajwal, Shiva Kumar, Muragesh, and Preethi — who join as our founding cohort of PhD and MS students. We're excited for the science ahead!</p>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-img gold">📄</div>
+          <div class="news-card-body">
+            <div class="news-date">Coming Soon</div>
+            <div class="news-title">First lab preprint in preparation</div>
+            <p class="news-excerpt">Our team is actively working on our first manuscripts. Stay tuned for upcoming preprints and publications from the lab.</p>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-img mid">🔬</div>
+          <div class="news-card-body">
+            <div class="news-date">Ongoing</div>
+            <div class="news-title">We are recruiting!</div>
+            <p class="news-excerpt">Interested in joining our lab? We welcome motivated students and postdocs with interests in genetics, genomics, or computational biology. Reach out to Dr. Mural.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Mural <span>Lab</span></div>
+      <div class="footer-text">© 2025 Mural Lab · South Dakota State University</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: PROJECTS
+══════════════════════════════════════════ -->
+<div class="page" id="page-projects">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-label">Active Work</div>
+      <h2>Projects</h2>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-inner">
+      <p class="section-subtitle">Our lab pursues a focused set of research projects that address fundamental and applied questions in plant genetics and genomics.</p>
+      <div class="divider"></div>
+      <div class="projects-grid">
+
+        <div class="project-card" data-num="01">
+          <span class="proj-status ongoing">Active</span>
+          <div class="proj-title">Genetic architecture of drought tolerance in maize</div>
+          <p class="proj-desc">Using multi-environment GWAS and genomic prediction to identify genetic variants and loci associated with drought stress response across diverse maize populations.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">GWAS</span>
+            <span class="proj-tag">Maize</span>
+            <span class="proj-tag">Drought</span>
+            <span class="proj-tag">QTL</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-num="02">
+          <span class="proj-status ongoing">Active</span>
+          <div class="proj-title">Genomic selection for yield improvement in sorghum</div>
+          <p class="proj-desc">Building and validating genomic prediction models for key yield traits in sorghum, with the goal of accelerating breeding cycles in dryland environments of the Great Plains.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Genomic Selection</span>
+            <span class="proj-tag">Sorghum</span>
+            <span class="proj-tag">Yield</span>
+            <span class="proj-tag">Great Plains</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-num="03">
+          <span class="proj-status ongoing">Active</span>
+          <div class="proj-title">Population genomics of soybean adaptation</div>
+          <p class="proj-desc">Investigating how genetic diversity is distributed across global soybean germplasm and identifying genomic signatures of local adaptation using population genetics approaches.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Population Genomics</span>
+            <span class="proj-tag">Soybean</span>
+            <span class="proj-tag">Local Adaptation</span>
+          </div>
+        </div>
+
+        <div class="project-card" data-num="04">
+          <span class="proj-status new">New</span>
+          <div class="proj-title">Machine learning for image-based phenotyping</div>
+          <p class="proj-desc">Developing deep learning pipelines to extract quantitative traits from field and greenhouse images, enabling high-throughput phenotyping for genetics studies at SDSU.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Deep Learning</span>
+            <span class="proj-tag">Phenotyping</span>
+            <span class="proj-tag">Computer Vision</span>
+            <span class="proj-tag">Python</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Mural <span>Lab</span></div>
+      <div class="footer-text">© 2025 Mural Lab · South Dakota State University</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: CONTACT
+══════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-label">Get in Touch</div>
+      <h2>Contact Us</h2>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-inner">
+      <div class="contact-layout">
+
+        <div>
+          <div class="section-label">Lab Information</div>
+          <div class="divider"></div>
+
+          <div class="contact-info-block">
+            <div class="contact-info-label">Principal Investigator</div>
+            <div class="contact-info-value">Dr. Ravi V. Mural<br>Assistant Professor</div>
+          </div>
+
+          <div class="contact-info-block">
+            <div class="contact-info-label">Email</div>
+            <div class="contact-info-value" style="color:var(--gold);">Ravi.Mural@sdstate.edu</div>
+          </div>
+
+          <div class="contact-info-block">
+            <div class="contact-info-label">Department</div>
+            <div class="contact-info-value">Department of Agronomy, Horticulture and Plant Science<br>South Dakota State University<br>Brookings, SD 57007</div>
+          </div>
+
+          <div class="contact-info-block">
+            <div class="contact-info-label">Joining the Lab</div>
+            <div class="contact-info-value" style="font-size:0.9rem;color:var(--text-muted);line-height:1.8;">We welcome applications from motivated graduate students and postdoctoral researchers with backgrounds in genetics, plant science, or computational biology. Please email Dr. Mural with your CV and a brief statement of interest.</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-label">Send a Message</div>
+          <div class="divider"></div>
+          <form class="contact-form" onsubmit="handleForm(event)">
+            <div class="form-group">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-input" placeholder="Your full name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-input" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <input type="text" class="form-input" placeholder="e.g. Graduate student inquiry">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea class="form-textarea" placeholder="Write your message here..."></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send Message</button>
+            <div id="form-msg" style="display:none;font-size:0.85rem;color:#1a6b35;padding:0.5rem 0;">✓ Thank you! Your message has been received.</div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Mural <span>Lab</span></div>
+      <div class="footer-text">© 2025 Mural Lab · South Dakota State University</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const links = document.querySelectorAll('.nav-links a');
+  links.forEach(a => {
+    if (a.getAttribute('onclick') && a.getAttribute('onclick').includes("'" + id + "'")) {
+      a.classList.add('active');
+    }
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function handleForm(e) {
+  e.preventDefault();
+  document.getElementById('form-msg').style.display = 'block';
+  e.target.reset();
+}
+</script>
+</body>
+</html>
