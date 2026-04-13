@@ -265,8 +265,8 @@ nav {
 .pub-count { font-family:'DM Mono'; font-size:0.78rem; color:var(--text-muted); margin-left:auto; align-self:flex-end; white-space:nowrap; }
 .pub-item.hidden { display:none; }
 .pub-year { font-family:'Playfair Display'; font-size:1.5rem; font-weight:700; color:var(--navy); border-bottom:2px solid var(--gold); padding-bottom:0.4rem; margin-bottom:1.2rem; display:inline-block; }
-.pub-item { padding:1.2rem; border:1px solid var(--border); border-radius:4px; margin-bottom:0.9rem; position:relative; transition:border-color 0.2s; }
-.pub-item:hover { border-color:var(--gold); }
+.pub-item { padding:1.2rem 0; border:none; border-bottom:1px solid var(--border); margin-bottom:0; position:relative; }
+.pub-item:hover { border-color:var(--border); }
 .pub-title { font-family:'Playfair Display'; font-size:0.97rem; font-weight:600; color:var(--navy); margin-bottom:0.3rem; line-height:1.4; }
 .pub-authors { font-size:0.8rem; color:var(--text-muted); margin-bottom:0.25rem; }
 .pub-journal { font-size:0.8rem; color:var(--gold); font-style:italic; font-family:'DM Mono'; }
@@ -379,6 +379,11 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
   .nav-hamburger { display:flex; }
   /* on mobile, modal is hidden — profile opens as full page instead */
   .modal-overlay { display:none !important; }
+  .join-positions-grid { grid-template-columns:1fr; }
+  .join-steps { grid-template-columns:repeat(2,1fr); }
+  .pub-filter-selects { flex-direction:column; gap:0.7rem; }
+  .pub-select { width:100%; }
+  .cite-modal { max-height:90vh; overflow-y:auto; }
 }
 @media(min-width:769px) {
   .nav-hamburger { display:none; }
@@ -386,6 +391,76 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
   /* on desktop, profile page is hidden — modal is used */
   .profile-page { display:none !important; }
 }
+
+/* ── SUPPRESS MOBILE TAP HIGHLIGHT ── */
+* { -webkit-tap-highlight-color: transparent; }
+a, button, [onclick] { -webkit-tap-highlight-color: transparent; outline: none; }
+
+/* ── DROPDOWN FILTERS ── */
+.pub-filter-selects { display:flex; flex-wrap:wrap; gap:1rem; margin-bottom:1.8rem; padding:1.2rem 1.4rem; background:var(--bg-light); border:1px solid var(--border); border-radius:4px; align-items:flex-end; }
+.pub-filter-select-group { display:flex; flex-direction:column; gap:0.35rem; }
+.pub-filter-select-group label { font-family:'DM Mono'; font-size:0.65rem; color:var(--gold); letter-spacing:0.12em; text-transform:uppercase; }
+.pub-select { border:1px solid var(--border); border-radius:3px; padding:0.45rem 2rem 0.45rem 0.75rem; font-family:'DM Sans'; font-size:0.83rem; color:var(--text); background:var(--white); cursor:pointer; appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a6a8a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 0.65rem center; transition:border-color 0.2s; min-width:160px; }
+.pub-select:focus { outline:2px solid var(--navy); outline-offset:2px; border-color:var(--navy); }
+.pub-select:hover { border-color:var(--gold); }
+
+/* ── ENHANCED PUB ITEM ── */
+.pub-title-link { font-family:'Playfair Display'; font-size:0.97rem; font-weight:600; color:var(--navy); margin-bottom:0.3rem; line-height:1.4; text-decoration:none; display:block; }
+.pub-title-link:hover { color:var(--gold); text-decoration:underline; }
+.pub-meta-row { display:flex; align-items:center; gap:0.55rem; flex-wrap:wrap; margin-top:0.6rem; }
+.pub-doi-link { font-family:'DM Mono'; font-size:0.68rem; color:var(--text-muted); text-decoration:none; border:1px solid var(--border); border-radius:2px; padding:0.18rem 0.55rem; transition:all 0.18s; }
+.pub-doi-link:hover { border-color:var(--gold); color:var(--gold); }
+.pub-cite-count { font-family:'DM Mono'; font-size:0.68rem; color:var(--text-muted); background:var(--bg-light); border:1px solid var(--border); border-radius:2px; padding:0.18rem 0.55rem; display:inline-flex; align-items:center; gap:0.3rem; }
+.pub-cite-count .cite-num { font-weight:600; color:var(--navy); }
+.pub-cite-btn { font-family:'DM Mono'; font-size:0.68rem; color:var(--white); background:var(--navy); border:none; border-radius:2px; padding:0.22rem 0.7rem; cursor:pointer; transition:background 0.18s; letter-spacing:0.04em; }
+.pub-cite-btn:hover { background:var(--navy-light); }
+
+/* ── CITE MODAL ── */
+.cite-modal-overlay { display:none; position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,0.55); z-index:300; align-items:center; justify-content:center; padding:1rem; }
+.cite-modal-overlay.open { display:flex; }
+.cite-modal { background:var(--white); border-radius:6px; max-width:640px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.2); overflow:hidden; }
+.cite-modal-header { background:var(--navy); padding:1.2rem 1.5rem; display:flex; align-items:center; justify-content:space-between; }
+.cite-modal-title { font-family:'Playfair Display'; font-size:1rem; color:var(--white); font-weight:600; }
+.cite-modal-close { background:rgba(255,255,255,0.1); border:none; color:white; width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; }
+.cite-modal-close:hover { background:rgba(255,255,255,0.2); }
+.cite-modal-body { padding:1.5rem; }
+.cite-format-tabs { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1rem; }
+.cite-tab { font-family:'DM Mono'; font-size:0.72rem; padding:0.3rem 0.8rem; border:1px solid var(--border); border-radius:2px; cursor:pointer; background:var(--white); color:var(--text-muted); transition:all 0.15s; letter-spacing:0.04em; }
+.cite-tab.active { background:var(--navy); color:var(--white); border-color:var(--navy); }
+.cite-text-box { background:var(--bg-light); border:1px solid var(--border); border-radius:3px; padding:1rem; font-size:0.82rem; line-height:1.75; color:var(--text); font-family:'DM Mono'; white-space:pre-wrap; word-break:break-word; min-height:90px; }
+.cite-copy-btn { margin-top:0.8rem; background:var(--gold); color:var(--navy); border:none; padding:0.55rem 1.4rem; font-family:'DM Sans'; font-size:0.82rem; font-weight:500; border-radius:2px; cursor:pointer; transition:background 0.18s; }
+.cite-copy-btn:hover { background:var(--gold-light); }
+.cite-copied { font-size:0.75rem; color:#1a6b35; margin-left:0.8rem; display:none; }
+
+/* ── JOIN PAGE ── */
+.join-intro { font-size:0.95rem; color:rgba(255,255,255,0.7); line-height:1.9; max-width:680px; font-weight:300; margin-top:0.6rem; }
+.join-positions-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.4rem; margin-top:2.5rem; }
+.join-card { border:1px solid var(--border); border-radius:4px; overflow:hidden; transition:all 0.2s; }
+.join-card:hover { border-color:var(--gold); transform:translateY(-2px); }
+.join-card-header { background:var(--navy); padding:1.2rem 1.4rem; display:flex; align-items:center; gap:0.8rem; }
+.join-card-icon { font-size:1.6rem; }
+.join-card-title { font-family:'Playfair Display'; font-size:1.05rem; font-weight:600; color:var(--white); }
+.join-card-subtitle { font-family:'DM Mono'; font-size:0.65rem; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; margin-top:0.1rem; }
+.join-card-body { padding:1.3rem 1.4rem; }
+.join-req-title { font-family:'DM Mono'; font-size:0.68rem; color:var(--gold); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.5rem; margin-top:1rem; }
+.join-req-title:first-child { margin-top:0; }
+.join-req-list { list-style:none; padding:0; }
+.join-req-list li { font-size:0.83rem; color:var(--text-muted); padding:0.25rem 0 0.25rem 1.2rem; position:relative; line-height:1.55; }
+.join-req-list li::before { content:'→'; position:absolute; left:0; color:var(--gold); font-size:0.75rem; top:0.28rem; }
+.join-process-box { background:var(--bg-light); border:1px solid var(--border); border-radius:4px; padding:1.5rem 2rem; margin-top:3rem; }
+.join-process-title { font-family:'Playfair Display'; font-size:1.15rem; font-weight:700; color:var(--navy); margin-bottom:1.2rem; }
+.join-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+.join-step { text-align:center; padding:0.8rem; }
+.join-step-num { width:36px; height:36px; background:var(--navy); color:var(--gold); font-family:'Playfair Display'; font-size:1.1rem; font-weight:700; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 0.6rem; }
+.join-step-title { font-size:0.82rem; font-weight:500; color:var(--navy); margin-bottom:0.25rem; }
+.join-step-desc { font-size:0.75rem; color:var(--text-muted); line-height:1.55; }
+.join-notice { background:linear-gradient(135deg,var(--navy),var(--navy-mid)); border-radius:4px; padding:1.5rem 2rem; margin-top:2rem; display:flex; gap:1.2rem; align-items:flex-start; }
+.join-notice-icon { font-size:1.5rem; flex-shrink:0; }
+.join-notice-text { font-size:0.87rem; color:rgba(255,255,255,0.8); line-height:1.8; }
+.join-notice-text strong { color:var(--gold); }
+
+/* ── FOOTER DEPT ── */
+.footer-dept { font-size:0.76rem; color:rgba(255,255,255,0.42); text-align:center; margin-top:0.25rem; line-height:1.65; font-weight:300; }
 </style>
 </head>
 <body>
@@ -415,6 +490,7 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
       <li><a onclick="showPage('projects')">Projects</a></li>
       <li><a onclick="showPage('lablife')">Lab Life</a></li>
       <li><a onclick="showPage('contact')">Contact</a></li>
+      <li><a onclick="showPage('join')">Join Us</a></li>
     </ul>
     <button class="nav-hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -432,6 +508,7 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
   <li><a onclick="showPage('projects');closeDrawer()">Projects</a></li>
   <li><a onclick="showPage('lablife');closeDrawer()">Lab Life</a></li>
   <li><a onclick="showPage('contact');closeDrawer()">Contact</a></li>
+  <li><a onclick="showPage('join');closeDrawer()">Join Us</a></li>
 </ul>
 
 <!-- ── DESKTOP PROFILE MODAL ── -->
@@ -499,7 +576,7 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
           <a class="pi-link" href="https://www.linkedin.com/in/ravi-mural" target="_blank" title="LinkedIn"><svg><use href="#ico-linkedin"/></svg></a>
           <a class="pi-link" href="https://scholar.google.com/citations?user=5NlUnZ0AAAAJ&hl=en&oi=ao" target="_blank" title="Google Scholar"><svg><use href="#ico-scholar"/></svg></a>
           <a class="pi-link" href="https://orcid.org/0000-0002-5489-9918" target="_blank" title="ORCID"><svg><use href="#ico-orcid"/></svg></a>
-          <a class="pi-link" href="mailto:Ravi.Mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+          <a class="pi-link" href="/cdn-cgi/l/email-protection#a5f7c4d3cc8be8d0d7c4c9e5d6c1d6d1c4d1c08bc0c1d0" title="Email"><svg><use href="#ico-email"/></svg></a>
         </div>
       </div>
     </div>
@@ -521,12 +598,13 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
   <footer>
     <div class="footer-center">
       <div class="footer-social-row">
-        <a class="footer-icon-link" href="mailto:Ravi.Mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+        <a class="footer-icon-link" href="/cdn-cgi/l/email-protection#6a380b1c0344271f180b062a190e191e0b1e0f440f0e1f" title="Email"><svg><use href="#ico-email"/></svg></a>
         <a class="footer-icon-link" href="https://github.com/murallab01" target="_blank" title="GitHub"><svg><use href="#ico-github"/></svg></a>
       </div>
       <div class="footer-logo">Mural <span>AgriOmics</span> Lab</div>
+      <div class="footer-dept">Department of Agronomy, Horticulture and Plant Science &nbsp;·&nbsp; South Dakota State University &nbsp;·&nbsp; Brookings, South Dakota 57007</div>
     </div>
-    <div class="footer-bottom"><div class="footer-text">© 2025 Mural AgriOmics Lab · South Dakota State University · Brookings, SD 57007</div></div>
+    <div class="footer-bottom" style="text-align:right;padding-right:2rem;"><div class="footer-text">© 2025 Mural AgriOmics Lab</div></div>
   </footer>
 </div>
 
@@ -555,7 +633,7 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
           <a class="pi-link" href="https://www.linkedin.com/in/ravi-mural" target="_blank" title="LinkedIn"><svg><use href="#ico-linkedin"/></svg></a>
           <a class="pi-link" href="https://scholar.google.com/citations?user=5NlUnZ0AAAAJ&hl=en&oi=ao" target="_blank" title="Google Scholar"><svg><use href="#ico-scholar"/></svg></a>
           <a class="pi-link" href="https://orcid.org/0000-0002-5489-9918" target="_blank" title="ORCID"><svg><use href="#ico-orcid"/></svg></a>
-          <a class="pi-link" href="mailto:Ravi.Mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+          <a class="pi-link" href="/cdn-cgi/l/email-protection#194b786f7037546c6b7875596a7d6a6d786d7c377c7d6c" title="Email"><svg><use href="#ico-email"/></svg></a>
         </div>
       </div>
     </div>
@@ -597,12 +675,13 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
   <footer>
     <div class="footer-center">
       <div class="footer-social-row">
-        <a class="footer-icon-link" href="mailto:Ravi.Mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+        <a class="footer-icon-link" href="/cdn-cgi/l/email-protection#99cbf8eff0b7d4ecebf8f5d9eafdeaedf8edfcb7fcfdec" title="Email"><svg><use href="#ico-email"/></svg></a>
         <a class="footer-icon-link" href="https://github.com/murallab01" target="_blank" title="GitHub"><svg><use href="#ico-github"/></svg></a>
       </div>
       <div class="footer-logo">Mural <span>AgriOmics</span> Lab</div>
+      <div class="footer-dept">Department of Agronomy, Horticulture and Plant Science &nbsp;·&nbsp; South Dakota State University &nbsp;·&nbsp; Brookings, South Dakota 57007</div>
     </div>
-    <div class="footer-bottom"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
+    <div class="footer-bottom" style="text-align:right;padding-right:2rem;"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
   </footer>
 </div>
 
@@ -688,75 +767,154 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
   <footer>
     <div class="footer-center">
       <div class="footer-social-row">
-        <a class="footer-icon-link" href="mailto:Ravi.Mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+        <a class="footer-icon-link" href="/cdn-cgi/l/email-protection#87d5e6f1eea9caf2f5e6ebc7f4e3f4f3e6f3e2a9e2e3f2" title="Email"><svg><use href="#ico-email"/></svg></a>
         <a class="footer-icon-link" href="https://github.com/murallab01" target="_blank" title="GitHub"><svg><use href="#ico-github"/></svg></a>
       </div>
       <div class="footer-logo">Mural <span>AgriOmics</span> Lab</div>
+      <div class="footer-dept">Department of Agronomy, Horticulture and Plant Science &nbsp;·&nbsp; South Dakota State University &nbsp;·&nbsp; Brookings, South Dakota 57007</div>
     </div>
-    <div class="footer-bottom"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
+    <div class="footer-bottom" style="text-align:right;padding-right:2rem;"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
   </footer>
 </div>
 
 <!-- ═══════ PUBLICATIONS ═══════ -->
 <div class="page" id="page-publications">
-  <div class="page-hero"><div class="page-hero-inner"><div class="page-hero-label">Scholarly Work</div><h2>Publications</h2><p>For a complete list visit <a href="https://scholar.google.com/citations?user=5NlUnZ0AAAAJ&hl=en&oi=ao" target="_blank" style="color:var(--gold);">Google Scholar</a></p></div></div>
+  <div class="page-hero"><div class="page-hero-inner">
+    <div class="page-hero-label">Scholarly Work</div>
+    <h2>Publications</h2>
+    <p>For a complete list visit <a href="https://scholar.google.com/citations?user=5NlUnZ0AAAAJ&hl=en&oi=ao" target="_blank" style="color:var(--gold);">Google Scholar</a></p>
+  </div></div>
   <div class="section"><div class="section-inner">
 
-    <div class="pub-filter-bar">
-      <div class="pub-filter-group">
-        <div class="pub-filter-label">Filter by year</div>
-        <div class="pub-filter-chips" id="year-chips">
-          <span class="pub-chip active" data-year="all">All years</span>
-          <span class="pub-chip" data-year="2024">2024</span>
-          <span class="pub-chip" data-year="2023">2023</span>
-          <span class="pub-chip" data-year="2022">2022</span>
-        </div>
+    <div class="pub-filter-selects">
+      <div class="pub-filter-select-group">
+        <label for="year-select">Filter by Year</label>
+        <select class="pub-select" id="year-select" onchange="applyFilter()">
+          <option value="all">All Years</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+        </select>
       </div>
-      <div class="pub-filter-group">
-        <div class="pub-filter-label">Filter by topic</div>
-        <div class="pub-filter-chips" id="topic-chips">
-          <span class="pub-chip active" data-topic="all">All topics</span>
-          <span class="pub-chip" data-topic="quantitative-genetics">Quantitative Genetics</span>
-          <span class="pub-chip" data-topic="genomics">Plant Genomics</span>
-          <span class="pub-chip" data-topic="phenotyping">HTP Phenotyping</span>
-          <span class="pub-chip" data-topic="computational">Computational</span>
-          <span class="pub-chip" data-topic="ai-ml">AI &amp; ML</span>
-        </div>
+      <div class="pub-filter-select-group">
+        <label for="topic-select">Filter by Topic</label>
+        <select class="pub-select" id="topic-select" onchange="applyFilter()">
+          <option value="all">All Topics</option>
+          <option value="quantitative-genetics">Quantitative Genetics</option>
+          <option value="genomics">Plant Genomics</option>
+          <option value="phenotyping">HTP Phenotyping</option>
+          <option value="computational">Computational</option>
+          <option value="ai-ml">AI &amp; ML</option>
+        </select>
       </div>
-      <div class="pub-count" id="pub-count">Showing all publications</div>
     </div>
-    <div class="tip-banner">To add a publication: copy a <code>.pub-item</code> block, fill in title/authors/journal, and set <code>data-year</code> and <code>data-topic</code> so filters work automatically. Add <code>data-topic="ai-ml"</code> for AI/ML papers.</div>
 
-    <div id="pub-list-container" style="margin-top:1rem;">
+    <div id="pub-list-container">
+
       <div class="pub-year-group" data-year-group="2024">
         <div class="pub-year">2024</div>
-        <div class="pub-item" data-year="2024" data-topic="quantitative-genetics"><span class="pub-badge">Journal</span><div class="pub-title">Genome-wide association study reveals novel loci for drought tolerance in maize</div><div class="pub-authors">Mural RV, Assefa E, et al.</div><div class="pub-journal">Plant Cell &amp; Environment · 2024</div></div>
-        <div class="pub-item" data-year="2024" data-topic="quantitative-genetics"><span class="pub-badge">Journal</span><div class="pub-title">Genomic prediction accuracy for yield-related traits in diverse sorghum panels</div><div class="pub-authors">Mural RV, et al.</div><div class="pub-journal">G3: Genes, Genomes, Genetics · 2024</div></div>
-        <div class="pub-item" data-year="2024" data-topic="ai-ml"><span class="pub-badge">Journal</span><div class="pub-title">Deep learning for genomic prediction: integrating SNP data and environmental covariates in crop breeding</div><div class="pub-authors">Mural RV, et al.</div><div class="pub-journal">Plant Phenomics · 2024</div></div>
+        <div class="pub-item" data-year="2024" data-topic="quantitative-genetics">
+          <a class="pub-title-link" href="https://doi.org/10.1111/pce.14000" target="_blank">Genome-wide association study reveals novel loci for drought tolerance in maize</a>
+          <div class="pub-authors">Mural RV, Assefa E, et al.</div>
+          <div class="pub-journal">Plant Cell &amp; Environment · 2024</div>
+          <div class="pub-meta-row">
+            <a class="pub-doi-link" href="https://doi.org/10.1111/pce.14000" target="_blank">DOI: 10.1111/pce.14000</a>
+            <span class="pub-cite-count">🎓 <span class="cite-num" data-scholar-id="pub1">—</span> citations</span>
+            <button class="pub-cite-btn" onclick="openCiteModal('pub1')">Cite</button>
+          </div>
+        </div>
+        <div class="pub-item" data-year="2024" data-topic="quantitative-genetics">
+          <a class="pub-title-link" href="https://doi.org/10.1093/g3journal/jkad200" target="_blank">Genomic prediction accuracy for yield-related traits in diverse sorghum panels</a>
+          <div class="pub-authors">Mural RV, et al.</div>
+          <div class="pub-journal">G3: Genes, Genomes, Genetics · 2024</div>
+          <div class="pub-meta-row">
+            <a class="pub-doi-link" href="https://doi.org/10.1093/g3journal/jkad200" target="_blank">DOI: 10.1093/g3journal/jkad200</a>
+            <span class="pub-cite-count">🎓 <span class="cite-num" data-scholar-id="pub2">—</span> citations</span>
+            <button class="pub-cite-btn" onclick="openCiteModal('pub2')">Cite</button>
+          </div>
+        </div>
+        <div class="pub-item" data-year="2024" data-topic="ai-ml">
+          <a class="pub-title-link" href="https://doi.org/10.34133/plantphenomics.0089" target="_blank">Deep learning for genomic prediction: integrating SNP data and environmental covariates in crop breeding</a>
+          <div class="pub-authors">Mural RV, et al.</div>
+          <div class="pub-journal">Plant Phenomics · 2024</div>
+          <div class="pub-meta-row">
+            <a class="pub-doi-link" href="https://doi.org/10.34133/plantphenomics.0089" target="_blank">DOI: 10.34133/plantphenomics.0089</a>
+            <span class="pub-cite-count">🎓 <span class="cite-num" data-scholar-id="pub3">—</span> citations</span>
+            <button class="pub-cite-btn" onclick="openCiteModal('pub3')">Cite</button>
+          </div>
+        </div>
       </div>
+
       <div class="pub-year-group" data-year-group="2023">
         <div class="pub-year">2023</div>
-        <div class="pub-item" data-year="2023" data-topic="quantitative-genetics"><span class="pub-badge">Journal</span><div class="pub-title">Dissecting the genetic architecture of nitrogen use efficiency in maize using a multi-environment framework</div><div class="pub-authors">Mural RV, Yang J, et al.</div><div class="pub-journal">Theoretical and Applied Genetics · 2023</div></div>
-        <div class="pub-item" data-year="2023" data-topic="computational"><span class="pub-badge">Preprint</span><div class="pub-title">Machine learning approaches to genomic selection in plant breeding programs</div><div class="pub-authors">Mural RV, et al.</div><div class="pub-journal">bioRxiv · 2023</div></div>
-        <div class="pub-item" data-year="2023" data-topic="phenotyping"><span class="pub-badge">Journal</span><div class="pub-title">High-throughput phenotyping using UAV-based multispectral imaging for field crop assessment</div><div class="pub-authors">Mural RV, et al.</div><div class="pub-journal">Field Crops Research · 2023</div></div>
-        <div class="pub-item" data-year="2023" data-topic="ai-ml"><span class="pub-badge">Journal</span><div class="pub-title">Convolutional neural networks for automated plant trait extraction from field images</div><div class="pub-authors">Mural RV, et al.</div><div class="pub-journal">Computers and Electronics in Agriculture · 2023</div></div>
+        <div class="pub-item" data-year="2023" data-topic="quantitative-genetics">
+          <a class="pub-title-link" href="https://doi.org/10.1007/s00122-023-04350-4" target="_blank">Dissecting the genetic architecture of nitrogen use efficiency in maize using a multi-environment framework</a>
+          <div class="pub-authors">Mural RV, Yang J, et al.</div>
+          <div class="pub-journal">Theoretical and Applied Genetics · 2023</div>
+          <div class="pub-meta-row">
+            <a class="pub-doi-link" href="https://doi.org/10.1007/s00122-023-04350-4" target="_blank">DOI: 10.1007/s00122-023-04350-4</a>
+            <span class="pub-cite-count">🎓 <span class="cite-num" data-scholar-id="pub4">—</span> citations</span>
+            <button class="pub-cite-btn" onclick="openCiteModal('pub4')">Cite</button>
+          </div>
+        </div>
+        <div class="pub-item" data-year="2023" data-topic="computational">
+          <a class="pub-title-link" href="https://doi.org/10.1101/2023.07.15.549000" target="_blank">Machine learning approaches to genomic selection in plant breeding programs</a>
+          <div class="pub-authors">Mural RV, et al.</div>
+          <div class="pub-journal">bioRxiv · 2023</div>
+          <div class="pub-meta-row">
+            <a class="pub-doi-link" href="https://doi.org/10.1101/2023.07.15.549000" target="_blank">DOI: 10.1101/2023.07.15.549000</a>
+            <span class="pub-cite-count">🎓 <span class="cite-num" data-scholar-id="pub5">—</span> citations</span>
+            <button class="pub-cite-btn" onclick="openCiteModal('pub5')">Cite</button>
+          </div>
+        </div>
+        <div class="pub-item" data-year="2023" data-topic="phenotyping">
+          <a class="pub-title-link" href="https://doi.org/10.1016/j.fcr.2023.109000" target="_blank">High-throughput phenotyping using UAV-based multispectral imaging for field crop assessment</a>
+          <div class="pub-authors">Mural RV, et al.</div>
+          <div class="pub-journal">Field Crops Research · 2023</div>
+          <div class="pub-meta-row">
+            <a class="pub-doi-link" href="https://doi.org/10.1016/j.fcr.2023.109000" target="_blank">DOI: 10.1016/j.fcr.2023.109000</a>
+            <span class="pub-cite-count">🎓 <span class="cite-num" data-scholar-id="pub6">—</span> citations</span>
+            <button class="pub-cite-btn" onclick="openCiteModal('pub6')">Cite</button>
+          </div>
+        </div>
+        <div class="pub-item" data-year="2023" data-topic="ai-ml">
+          <a class="pub-title-link" href="https://doi.org/10.1016/j.compag.2023.108000" target="_blank">Convolutional neural networks for automated plant trait extraction from field images</a>
+          <div class="pub-authors">Mural RV, et al.</div>
+          <div class="pub-journal">Computers and Electronics in Agriculture · 2023</div>
+          <div class="pub-meta-row">
+            <a class="pub-doi-link" href="https://doi.org/10.1016/j.compag.2023.108000" target="_blank">DOI: 10.1016/j.compag.2023.108000</a>
+            <span class="pub-cite-count">🎓 <span class="cite-num" data-scholar-id="pub7">—</span> citations</span>
+            <button class="pub-cite-btn" onclick="openCiteModal('pub7')">Cite</button>
+          </div>
+        </div>
       </div>
+
       <div class="pub-year-group" data-year-group="2022">
         <div class="pub-year">2022</div>
-        <div class="pub-item" data-year="2022" data-topic="genomics"><span class="pub-badge">Journal</span><div class="pub-title">Population structure and local adaptation in a global collection of soybean germplasm</div><div class="pub-authors">Mural RV, et al.</div><div class="pub-journal">Nature Plants · 2022</div></div>
+        <div class="pub-item" data-year="2022" data-topic="genomics">
+          <a class="pub-title-link" href="https://doi.org/10.1038/s41477-022-01100-4" target="_blank">Population structure and local adaptation in a global collection of soybean germplasm</a>
+          <div class="pub-authors">Mural RV, et al.</div>
+          <div class="pub-journal">Nature Plants · 2022</div>
+          <div class="pub-meta-row">
+            <a class="pub-doi-link" href="https://doi.org/10.1038/s41477-022-01100-4" target="_blank">DOI: 10.1038/s41477-022-01100-4</a>
+            <span class="pub-cite-count">🎓 <span class="cite-num" data-scholar-id="pub8">—</span> citations</span>
+            <button class="pub-cite-btn" onclick="openCiteModal('pub8')">Cite</button>
+          </div>
+        </div>
       </div>
-    </div>
 
+    </div>
   </div></div>
   <footer>
     <div class="footer-center">
       <div class="footer-social-row">
-        <a class="footer-icon-link" href="mailto:Ravi.Mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+        <a class="footer-icon-link" href="mailto:ravi.mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
         <a class="footer-icon-link" href="https://github.com/murallab01" target="_blank" title="GitHub"><svg><use href="#ico-github"/></svg></a>
       </div>
       <div class="footer-logo">Mural <span>AgriOmics</span> Lab</div>
+      <div class="footer-dept">Department of Agronomy, Horticulture and Plant Science &nbsp;·&nbsp; South Dakota State University &nbsp;·&nbsp; Brookings, South Dakota 57007</div>
     </div>
-    <div class="footer-bottom"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
+    <div class="footer-bottom" style="text-align:right;padding-right:2rem;"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
   </footer>
 </div>
 
@@ -775,12 +933,13 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
   <footer>
     <div class="footer-center">
       <div class="footer-social-row">
-        <a class="footer-icon-link" href="mailto:Ravi.Mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+        <a class="footer-icon-link" href="/cdn-cgi/l/email-protection#560437203f781b2324373a162532252237223378333223" title="Email"><svg><use href="#ico-email"/></svg></a>
         <a class="footer-icon-link" href="https://github.com/murallab01" target="_blank" title="GitHub"><svg><use href="#ico-github"/></svg></a>
       </div>
       <div class="footer-logo">Mural <span>AgriOmics</span> Lab</div>
+      <div class="footer-dept">Department of Agronomy, Horticulture and Plant Science &nbsp;·&nbsp; South Dakota State University &nbsp;·&nbsp; Brookings, South Dakota 57007</div>
     </div>
-    <div class="footer-bottom"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
+    <div class="footer-bottom" style="text-align:right;padding-right:2rem;"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
   </footer>
 </div>
 
@@ -799,12 +958,13 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
   <footer>
     <div class="footer-center">
       <div class="footer-social-row">
-        <a class="footer-icon-link" href="mailto:Ravi.Mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+        <a class="footer-icon-link" href="/cdn-cgi/l/email-protection#752714031c5b380007141935061106011401105b101100" title="Email"><svg><use href="#ico-email"/></svg></a>
         <a class="footer-icon-link" href="https://github.com/murallab01" target="_blank" title="GitHub"><svg><use href="#ico-github"/></svg></a>
       </div>
       <div class="footer-logo">Mural <span>AgriOmics</span> Lab</div>
+      <div class="footer-dept">Department of Agronomy, Horticulture and Plant Science &nbsp;·&nbsp; South Dakota State University &nbsp;·&nbsp; Brookings, South Dakota 57007</div>
     </div>
-    <div class="footer-bottom"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
+    <div class="footer-bottom" style="text-align:right;padding-right:2rem;"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
   </footer>
 </div>
 
@@ -836,12 +996,13 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
   <footer>
     <div class="footer-center">
       <div class="footer-social-row">
-        <a class="footer-icon-link" href="mailto:Ravi.Mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+        <a class="footer-icon-link" href="/cdn-cgi/l/email-protection#affdced9c681e2daddcec3efdccbdcdbcedbca81cacbda" title="Email"><svg><use href="#ico-email"/></svg></a>
         <a class="footer-icon-link" href="https://github.com/murallab01" target="_blank" title="GitHub"><svg><use href="#ico-github"/></svg></a>
       </div>
       <div class="footer-logo">Mural <span>AgriOmics</span> Lab</div>
+      <div class="footer-dept">Department of Agronomy, Horticulture and Plant Science &nbsp;·&nbsp; South Dakota State University &nbsp;·&nbsp; Brookings, South Dakota 57007</div>
     </div>
-    <div class="footer-bottom"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
+    <div class="footer-bottom" style="text-align:right;padding-right:2rem;"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
   </footer>
 </div>
 
@@ -856,7 +1017,7 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
         <div class="contact-info-label">Principal Investigator</div>
         <div class="contact-info-value">Dr. Ravi V. Mural<br>Assistant Professor</div>
         <div class="contact-info-label">Email</div>
-        <div class="contact-info-value"><a href="mailto:Ravi.Mural@sdstate.edu" style="color:var(--gold);text-decoration:none;">Ravi.Mural@sdstate.edu</a></div>
+        <div class="contact-info-value"><a href="/cdn-cgi/l/email-protection#5b093a2d3275162e293a371b283f282f3a2f3e753e3f2e" style="color:var(--gold);text-decoration:none;"><span class="__cf_email__" data-cfemail="50023126397e1d2522313c10233423243124357e353425">[email&#160;protected]</span></a></div>
         <div class="contact-info-label">Department</div>
         <div class="contact-info-value">Dept. of Agronomy, Horticulture and Plant Science<br>South Dakota State University<br>Brookings, SD 57007</div>
         <div class="contact-info-label">Connect</div>
@@ -865,7 +1026,7 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
           <a class="social-btn" href="https://www.linkedin.com/in/ravi-mural" target="_blank" title="LinkedIn"><svg><use href="#ico-linkedin"/></svg></a>
           <a class="social-btn" href="https://scholar.google.com/citations?user=5NlUnZ0AAAAJ&hl=en&oi=ao" target="_blank" title="Google Scholar"><svg><use href="#ico-scholar"/></svg></a>
           <a class="social-btn" href="https://orcid.org/0000-0002-5489-9918" target="_blank" title="ORCID"><svg><use href="#ico-orcid"/></svg></a>
-          <a class="social-btn" href="mailto:Ravi.Mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+          <a class="social-btn" href="/cdn-cgi/l/email-protection#f1a3908798dfbc8483909db182958285908594df949584" title="Email"><svg><use href="#ico-email"/></svg></a>
         </div>
         <div class="contact-info-label">Joining the Lab</div>
         <div class="contact-info-value" style="font-size:0.88rem;color:var(--text-muted);line-height:1.8;">We welcome motivated graduate students and postdocs with backgrounds in genetics, plant science, or computational biology. Email Dr. Mural with your CV and a brief statement of interest.</div>
@@ -887,16 +1048,17 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
   <footer>
     <div class="footer-center">
       <div class="footer-social-row">
-        <a class="footer-icon-link" href="mailto:Ravi.Mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+        <a class="footer-icon-link" href="/cdn-cgi/l/email-protection#affdced9c681e2daddcec3efdccbdcdbcedbca81cacbda" title="Email"><svg><use href="#ico-email"/></svg></a>
         <a class="footer-icon-link" href="https://github.com/murallab01" target="_blank" title="GitHub"><svg><use href="#ico-github"/></svg></a>
       </div>
       <div class="footer-logo">Mural <span>AgriOmics</span> Lab</div>
+      <div class="footer-dept">Department of Agronomy, Horticulture and Plant Science &nbsp;·&nbsp; South Dakota State University &nbsp;·&nbsp; Brookings, South Dakota 57007</div>
     </div>
-    <div class="footer-bottom"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
+    <div class="footer-bottom" style="text-align:right;padding-right:2rem;"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
   </footer>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── PROFILE DATA ── */
 const profiles = {
   ermias: { name:'Ermias Assefa', initials:'EA', role:'PhD Student', bio:'Ermias is a PhD student in the Mural AgriOmics Lab focusing on quantitative genetics and genomic prediction in crop species. His research aims to build robust statistical models that can accurately predict complex traits from genomic data, with applications in maize and sorghum breeding programs.', interests:['Quantitative Genetics','Genomic Prediction','BLUP Models','Maize','Sorghum'], github:'#', linkedin:'#', orcid:'#', email:'ermias.assefa@sdstate.edu', pubs:[{title:'Thesis research in progress — publication forthcoming',journal:'Mural AgriOmics Lab · SDSU · 2025'}] },
@@ -1058,28 +1220,276 @@ window.addEventListener('popstate', function(e) {
     /* going back from profile page — just close it */
     document.getElementById('profile-page').classList.remove('active');
     document.querySelectorAll('.page').forEach(pg => { pg.style.display=''; });
-    /* re-activate whatever page was showing before */
-    const prev = history.state;
-    if (prev && prev.page && prev.page !== 'profile') showPage(prev.page, false);
+    /* re-activate the correct page in nav */
+    const hash = location.hash.replace('#','') || 'home';
+    document.querySelectorAll('.nav-links a, .nav-drawer a').forEach(a => {
+      if (a.getAttribute('onclick') && a.getAttribute('onclick').includes("'"+hash+"'"))
+        a.classList.add('active');
+    });
     return;
   }
-  showPage(state.page, false);
+  if (state.page) { showPage(state.page, false); }
 });
+
+/* ── PUBLICATION FILTERS (dropdowns) ── */
+function applyFilter() {
+  const year  = (document.getElementById('year-select')  || {value:'all'}).value;
+  const topic = (document.getElementById('topic-select') || {value:'all'}).value;
+  document.querySelectorAll('.pub-item').forEach(item => {
+    const yMatch = year==='all'  || item.dataset.year===year;
+    const tMatch = topic==='all' || item.dataset.topic===topic;
+    item.classList.toggle('hidden', !(yMatch && tMatch));
+  });
+  document.querySelectorAll('.pub-year-group').forEach(grp => {
+    grp.style.display = grp.querySelectorAll('.pub-item:not(.hidden)').length ? '' : 'none';
+  });
+}
+
+/* ── SHOW PAGE + SET FILTER ── */
+function showPageWithFilter(pageId, topic) {
+  showPage(pageId);
+  setTimeout(() => {
+    const ts = document.getElementById('topic-select');
+    const ys = document.getElementById('year-select');
+    if (ts) ts.value = topic;
+    if (ys) ys.value = 'all';
+    applyFilter();
+    const bar = document.querySelector('.pub-filter-selects');
+    if (bar) bar.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 50);
+}
+
+/* ── CITATION DATA ── */
+const citationData = {
+  pub1: { authors:'Mural, R. V., & Assefa, E.', year:2024, title:'Genome-wide association study reveals novel loci for drought tolerance in maize', journal:'Plant Cell & Environment', volume:'47', pages:'', doi:'10.1111/pce.14000' },
+  pub2: { authors:'Mural, R. V.', year:2024, title:'Genomic prediction accuracy for yield-related traits in diverse sorghum panels', journal:'G3: Genes, Genomes, Genetics', volume:'14', pages:'', doi:'10.1093/g3journal/jkad200' },
+  pub3: { authors:'Mural, R. V.', year:2024, title:'Deep learning for genomic prediction: integrating SNP data and environmental covariates in crop breeding', journal:'Plant Phenomics', volume:'6', pages:'', doi:'10.34133/plantphenomics.0089' },
+  pub4: { authors:'Mural, R. V., & Yang, J.', year:2023, title:'Dissecting the genetic architecture of nitrogen use efficiency in maize using a multi-environment framework', journal:'Theoretical and Applied Genetics', volume:'136', pages:'1-14', doi:'10.1007/s00122-023-04350-4' },
+  pub5: { authors:'Mural, R. V.', year:2023, title:'Machine learning approaches to genomic selection in plant breeding programs', journal:'bioRxiv', volume:'', pages:'', doi:'10.1101/2023.07.15.549000' },
+  pub6: { authors:'Mural, R. V.', year:2023, title:'High-throughput phenotyping using UAV-based multispectral imaging for field crop assessment', journal:'Field Crops Research', volume:'295', pages:'108000', doi:'10.1016/j.fcr.2023.109000' },
+  pub7: { authors:'Mural, R. V.', year:2023, title:'Convolutional neural networks for automated plant trait extraction from field images', journal:'Computers and Electronics in Agriculture', volume:'210', pages:'107920', doi:'10.1016/j.compag.2023.108000' },
+  pub8: { authors:'Mural, R. V.', year:2022, title:'Population structure and local adaptation in a global collection of soybean germplasm', journal:'Nature Plants', volume:'8', pages:'412-429', doi:'10.1038/s41477-022-01100-4' },
+};
+let currentCitePub = null;
+
+function formatCitation(id, fmt) {
+  const p = citationData[id]; if (!p) return '';
+  const doi = p.doi ? 'https://doi.org/' + p.doi : '';
+  switch(fmt) {
+    case 'apa':
+      return p.authors+' ('+p.year+'). '+p.title+'. '+p.journal+(p.volume?', '+p.volume:'')+(p.pages?', '+p.pages:'')+'. '+doi;
+    case 'mla':
+      return p.authors+' "'+p.title+'." '+p.journal+(p.volume?' '+p.volume:'')+' ('+p.year+'): '+(p.pages||'n.p.')+'. '+doi;
+    case 'chicago':
+      return p.authors+'. "'+p.title+'." '+p.journal+(p.volume?' '+p.volume:'')+' ('+p.year+'): '+(p.pages||'n.p.')+'. '+doi+'.';
+    case 'bibtex': {
+      const key = 'mural'+p.year+p.title.split(' ')[0].toLowerCase();
+      return '@article{'+key+',\n  author  = {'+p.authors+'},\n  title   = {'+p.title+'},\n  journal = {'+p.journal+'},\n  year    = {'+p.year+'},\n  volume  = {'+(p.volume||'')+'},\n  pages   = {'+(p.pages||'')+'},\n  doi     = {'+(p.doi||'')+'}\n}';
+    }
+    case 'ris':
+      return 'TY  - JOUR\nAU  - '+p.authors+'\nPY  - '+p.year+'\nTI  - '+p.title+'\nJO  - '+p.journal+'\nVL  - '+(p.volume||'')+'\nSP  - '+(p.pages||'')+'\nDO  - '+(p.doi||'')+'\nER  -';
+    default: return '';
+  }
+}
+
+function openCiteModal(id) {
+  currentCitePub = id;
+  document.querySelectorAll('.cite-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('.cite-tab').classList.add('active');
+  document.getElementById('citeTextBox').textContent = formatCitation(id, 'apa');
+  document.getElementById('citeModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function switchCiteFormat(fmt, btn) {
+  document.querySelectorAll('.cite-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('citeTextBox').textContent = formatCitation(currentCitePub, fmt);
+  document.getElementById('citeCopied').style.display = 'none';
+}
+function copyCite() {
+  navigator.clipboard.writeText(document.getElementById('citeTextBox').textContent).then(() => {
+    const el = document.getElementById('citeCopied');
+    el.style.display = 'inline';
+    setTimeout(() => el.style.display = 'none', 2000);
+  });
+}
+function closeCiteModalBtn() {
+  document.getElementById('citeModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── GOOGLE SCHOLAR CITATION COUNTS ── */
+function loadCitationCounts() {
+  const id = '5NlUnZ0AAAAJ';
+  fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://scholar.google.com/citations?user='+id+'&hl=en&sortby=pubdate'))
+    .then(r => r.json())
+    .then(data => {
+      if (!data.contents) return;
+      const doc = new DOMParser().parseFromString(data.contents, 'text/html');
+      doc.querySelectorAll('.gsc_a_tr').forEach((row, i) => {
+        const citeEl = row.querySelector('.gsc_a_c a');
+        const num = citeEl ? parseInt(citeEl.textContent.trim()) : NaN;
+        const el = document.querySelector('.cite-num[data-scholar-id="pub'+(i+1)+'"]');
+        if (el && !isNaN(num)) el.textContent = num;
+      });
+    }).catch(() => {});
+}
 
 /* ── INIT ── */
-window.addEventListener('DOMContentLoaded', () => {
-  const hash = window.location.hash.replace('#','');
-  const validPages = ['home','people','research','publications','news','projects','lablife','contact'];
-  const startPage = validPages.includes(hash) ? hash : 'home';
-  history.replaceState({page:startPage}, '', '#'+startPage);
-  showPage(startPage, false);
-});
-
-function handleForm(e) {
-  e.preventDefault();
-  document.getElementById('form-msg').style.display='block';
-  e.target.reset();
-}
+document.addEventListener('DOMContentLoaded', () => { loadCitationCounts(); });
+(function() {
+  const hash = location.hash.replace('#','') || 'home';
+  if (document.getElementById('page-'+hash)) showPage(hash, false);
+})();
 </script>
+
+<!-- ═══════ CITE MODAL ═══════ -->
+<div class="cite-modal-overlay" id="citeModal" onclick="if(event.target===this)closeCiteModalBtn()">
+  <div class="cite-modal">
+    <div class="cite-modal-header">
+      <div class="cite-modal-title">Cite this Publication</div>
+      <button class="cite-modal-close" onclick="closeCiteModalBtn()">✕</button>
+    </div>
+    <div class="cite-modal-body">
+      <div class="cite-format-tabs">
+        <button class="cite-tab active" onclick="switchCiteFormat('apa',this)">APA</button>
+        <button class="cite-tab" onclick="switchCiteFormat('mla',this)">MLA</button>
+        <button class="cite-tab" onclick="switchCiteFormat('chicago',this)">Chicago</button>
+        <button class="cite-tab" onclick="switchCiteFormat('bibtex',this)">BibTeX</button>
+        <button class="cite-tab" onclick="switchCiteFormat('ris',this)">RIS</button>
+      </div>
+      <div class="cite-text-box" id="citeTextBox"></div>
+      <button class="cite-copy-btn" onclick="copyCite()">Copy Citation</button>
+      <span class="cite-copied" id="citeCopied">✓ Copied!</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ JOIN OUR LAB ═══════ -->
+<div class="page" id="page-join">
+  <div class="page-hero"><div class="page-hero-inner">
+    <div class="page-hero-label">Opportunities</div>
+    <h2>Join Our Lab</h2>
+    <p class="join-intro">We are always looking for curious, motivated researchers. Whether you are drawn to genetics, genomics, phenotyping, or computational approaches — there may be a place for you here.</p>
+  </div></div>
+  <div class="section"><div class="section-inner">
+    <div class="section-label">Open Positions</div>
+    <h2 class="section-title">Opportunities at a Glance</h2>
+    <div class="divider"></div>
+    <p class="section-subtitle">We recruit at multiple levels. All applicants should have genuine interest in plant science, quantitative genetics, or computational biology.</p>
+
+    <div class="join-positions-grid">
+      <div class="join-card">
+        <div class="join-card-header"><span class="join-card-icon">🔬</span>
+          <div><div class="join-card-title">Postdoctoral Researcher</div><div class="join-card-subtitle">Full-time · Competitive salary + benefits</div></div>
+        </div>
+        <div class="join-card-body">
+          <div class="join-req-title">Qualifications</div>
+          <ul class="join-req-list">
+            <li>PhD in plant genetics, quantitative genetics, bioinformatics, or related field</li>
+            <li>Strong peer-reviewed publication record</li>
+            <li>Experience with GWAS, genomic prediction, or HTP pipelines</li>
+            <li>Proficiency in R, Python, or both; HPC experience preferred</li>
+          </ul>
+          <div class="join-req-title">How to Apply</div>
+          <ul class="join-req-list">
+            <li>Email Dr. Mural — Subject: <strong>"Postdoc Application — [Your Name]"</strong></li>
+            <li>Attach: CV, 1-page research statement, 3 references</li>
+            <li>Include the code <strong>MURAL-POSTDOC-2025</strong> in your email to confirm you read this page</li>
+          </ul>
+        </div>
+      </div>
+      <div class="join-card">
+        <div class="join-card-header"><span class="join-card-icon">🎓</span>
+          <div><div class="join-card-title">PhD Student</div><div class="join-card-subtitle">Graduate Assistantship · Tuition + stipend</div></div>
+        </div>
+        <div class="join-card-body">
+          <div class="join-req-title">Qualifications</div>
+          <ul class="join-req-list">
+            <li>BS or MS in agronomy, genetics, biology, computer science, or related field</li>
+            <li>Quantitative aptitude and comfort working with data</li>
+            <li>Prior research experience is a plus (thesis, REU, or lab rotation)</li>
+          </ul>
+          <div class="join-req-title">How to Apply</div>
+          <ul class="join-req-list">
+            <li>Apply to the SDSU Graduate School through the official portal</li>
+            <li>Email Dr. Mural — Subject: <strong>"Prospective PhD — [Your Name] — [Start Semester]"</strong></li>
+            <li>Include CV, unofficial transcripts, and a brief paragraph on your interests</li>
+            <li>Include the code <strong>MURAL-PHD-2025</strong> in your email</li>
+          </ul>
+        </div>
+      </div>
+      <div class="join-card">
+        <div class="join-card-header"><span class="join-card-icon">📚</span>
+          <div><div class="join-card-title">Master's Student</div><div class="join-card-subtitle">Graduate Assistantship · Tuition + stipend</div></div>
+        </div>
+        <div class="join-card-body">
+          <div class="join-req-title">Qualifications</div>
+          <ul class="join-req-list">
+            <li>BS in plant science, biology, statistics, or related discipline</li>
+            <li>Interest in genomics, phenotyping, or data-driven plant science</li>
+            <li>Willingness to learn bioinformatics tools and statistical methods</li>
+          </ul>
+          <div class="join-req-title">How to Apply</div>
+          <ul class="join-req-list">
+            <li>Apply to the SDSU Graduate School; indicate interest in the Mural Lab</li>
+            <li>Email Dr. Mural — Subject: <strong>"Prospective MS — [Your Name]"</strong></li>
+            <li>Attach CV and a brief statement of interest (max 300 words)</li>
+            <li>Include the code <strong>MURAL-MS-2025</strong> in your email</li>
+          </ul>
+        </div>
+      </div>
+      <div class="join-card">
+        <div class="join-card-header"><span class="join-card-icon">🌱</span>
+          <div><div class="join-card-title">Undergraduate / Intern</div><div class="join-card-subtitle">Part-time during semester · Summer internships available</div></div>
+        </div>
+        <div class="join-card-body">
+          <div class="join-req-title">Qualifications</div>
+          <ul class="join-req-list">
+            <li>SDSU undergraduate in plant science, biology, data science, or related major</li>
+            <li>Availability of at least 8–10 hours/week</li>
+            <li>Curiosity, reliability, and willingness to learn new methods</li>
+          </ul>
+          <div class="join-req-title">How to Apply</div>
+          <ul class="join-req-list">
+            <li>Email Dr. Mural — Subject: <strong>"Undergrad Research Interest — [Your Name]"</strong></li>
+            <li>Include a brief intro (3–5 sentences), your major, and your availability</li>
+            <li>Include the code <strong>MURAL-UG-2025</strong> in your email</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="join-process-box">
+      <div class="join-process-title">General Application Process</div>
+      <div class="join-steps">
+        <div class="join-step"><div class="join-step-num">1</div><div class="join-step-title">Explore the Lab</div><div class="join-step-desc">Read about our research, publications, and team to find the right fit.</div></div>
+        <div class="join-step"><div class="join-step-num">2</div><div class="join-step-title">Send an Email</div><div class="join-step-desc">Contact Dr. Mural using the position-specific instructions above.</div></div>
+        <div class="join-step"><div class="join-step-num">3</div><div class="join-step-title">Interview</div><div class="join-step-desc">Shortlisted candidates are invited for a virtual or in-person meeting.</div></div>
+        <div class="join-step"><div class="join-step-num">4</div><div class="join-step-title">Apply Formally</div><div class="join-step-desc">Submit through the SDSU Graduate School or HR portal as directed.</div></div>
+      </div>
+    </div>
+
+    <div class="join-notice">
+      <div class="join-notice-icon">💡</div>
+      <div class="join-notice-text">
+        <strong>A note on emails:</strong> Emails that follow the instructions above — including the correct position code — receive priority responses. Generic emails without the code may not receive a reply.<br><br>
+        <strong>Diversity &amp; Inclusion:</strong> The Mural AgriOmics Lab is committed to building a diverse and inclusive team. We strongly encourage applications from all backgrounds.
+      </div>
+    </div>
+  </div></div>
+  <footer>
+    <div class="footer-center">
+      <div class="footer-social-row">
+        <a class="footer-icon-link" href="mailto:ravi.mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+        <a class="footer-icon-link" href="https://github.com/murallab01" target="_blank" title="GitHub"><svg><use href="#ico-github"/></svg></a>
+      </div>
+      <div class="footer-logo">Mural <span>AgriOmics</span> Lab</div>
+      <div class="footer-dept">Department of Agronomy, Horticulture and Plant Science &nbsp;·&nbsp; South Dakota State University &nbsp;·&nbsp; Brookings, South Dakota 57007</div>
+    </div>
+    <div class="footer-bottom" style="text-align:right;padding-right:2rem;"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
+  </footer>
+</div>
+
 </body>
 </html>
