@@ -372,6 +372,8 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
   .news-grid,.projects-grid { grid-template-columns:1fr; }
   .gallery-grid { grid-template-columns:1fr 1fr; }
   .gallery-wide { grid-column:span 1; }
+  .gallery-item .gallery-placeholder div:not(.g-icon) { display:none; }
+  .gallery-item .gallery-placeholder { justify-content:center; }
   .research-area { grid-template-columns:1fr; }
   .research-area:nth-child(even) .ra-text, .research-area:nth-child(even) .ra-visual { order:unset; }
   /* hide desktop nav links, show hamburger */
@@ -379,8 +381,12 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
   .nav-hamburger { display:flex; }
   /* on mobile, modal is hidden — profile opens as full page instead */
   .modal-overlay { display:none !important; }
-  .join-positions-grid { grid-template-columns:1fr; }
-  .join-steps { grid-template-columns:repeat(2,1fr); }
+  .join-positions-grid { grid-template-columns:1fr; gap:1rem; }
+  .join-steps { grid-template-columns:1fr; gap:0; }
+  .join-step { display:flex; align-items:flex-start; gap:1rem; text-align:left; padding:0.75rem 0; border-bottom:1px solid var(--border); }
+  .join-step:last-child { border-bottom:none; }
+  .join-step-num { flex-shrink:0; margin:0; }
+  .join-step-content { display:flex; flex-direction:column; gap:0.2rem; }
   .pub-filter-selects { flex-direction:column; gap:0.7rem; }
   .pub-select { width:100%; }
   .cite-modal { max-height:90vh; overflow-y:auto; }
@@ -1151,7 +1157,13 @@ function closeDrawer() {
 }
 
 /* ── SHOW PAGE ── */
+const pageScrollPositions = {};
+
 function showPage(id, pushState) {
+  /* save scroll position of current page before leaving */
+  const currentActive = document.querySelector('.page.active');
+  if (currentActive) pageScrollPositions[currentActive.id] = window.scrollY;
+
   document.querySelectorAll('.page').forEach(p => { p.classList.remove('active'); p.style.display=''; });
   document.getElementById('profile-page').classList.remove('active');
   document.querySelectorAll('.nav-links a, .nav-drawer a').forEach(a => a.classList.remove('active'));
@@ -1159,7 +1171,11 @@ function showPage(id, pushState) {
   document.querySelectorAll('.nav-links a, .nav-drawer a').forEach(a => {
     if (a.getAttribute('onclick') && a.getAttribute('onclick').includes("'"+id+"'")) a.classList.add('active');
   });
-  window.scrollTo({top:0,behavior:'smooth'});
+
+  /* restore saved scroll position, or go to top for fresh visits */
+  const savedY = pushState === false ? (pageScrollPositions['page-'+id] || 0) : 0;
+  window.scrollTo({top: savedY, behavior: pushState === false ? 'instant' : 'smooth'});
+
   if (pushState !== false) history.pushState({page:id}, '', '#'+id);
 }
 
@@ -1463,10 +1479,10 @@ document.addEventListener('DOMContentLoaded', () => { loadCitationCounts(); });
     <div class="join-process-box">
       <div class="join-process-title">General Application Process</div>
       <div class="join-steps">
-        <div class="join-step"><div class="join-step-num">1</div><div class="join-step-title">Explore the Lab</div><div class="join-step-desc">Read about our research, publications, and team to find the right fit.</div></div>
-        <div class="join-step"><div class="join-step-num">2</div><div class="join-step-title">Send an Email</div><div class="join-step-desc">Contact Dr. Mural using the position-specific instructions above.</div></div>
-        <div class="join-step"><div class="join-step-num">3</div><div class="join-step-title">Interview</div><div class="join-step-desc">Shortlisted candidates are invited for a virtual or in-person meeting.</div></div>
-        <div class="join-step"><div class="join-step-num">4</div><div class="join-step-title">Apply Formally</div><div class="join-step-desc">Submit through the SDSU Graduate School or HR portal as directed.</div></div>
+        <div class="join-step"><div class="join-step-num">1</div><div class="join-step-content"><div class="join-step-title">Explore the Lab</div><div class="join-step-desc">Read about our research, publications, and team to find the right fit.</div></div></div>
+        <div class="join-step"><div class="join-step-num">2</div><div class="join-step-content"><div class="join-step-title">Send an Email</div><div class="join-step-desc">Contact Dr. Mural using the position-specific instructions above.</div></div></div>
+        <div class="join-step"><div class="join-step-num">3</div><div class="join-step-content"><div class="join-step-title">Interview</div><div class="join-step-desc">Shortlisted candidates are invited for a virtual or in-person meeting.</div></div></div>
+        <div class="join-step"><div class="join-step-num">4</div><div class="join-step-content"><div class="join-step-title">Apply Formally</div><div class="join-step-desc">Submit through the SDSU Graduate School or HR portal as directed.</div></div></div>
       </div>
     </div>
 
