@@ -365,44 +365,6 @@ footer { background:var(--navy); padding:2rem 1.5rem 1.5rem; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 
 /* ── RESPONSIVE ── */
-@media(max-width:768px) {
-  .hero-grid,.pi-inner,.pi-card-full,.contact-layout { grid-template-columns:1fr; }
-  .research-grid { grid-template-columns:repeat(2,1fr); }
-  .people-grid { grid-template-columns:repeat(2,1fr); }
-  .news-grid,.projects-grid { grid-template-columns:1fr; }
-  .gallery-grid { grid-template-columns:1fr 1fr; }
-  .gallery-wide { grid-column:span 1; }
-  .gallery-item .gallery-placeholder div:not(.g-icon) { display:none; }
-  .gallery-item .gallery-placeholder { justify-content:center; }
-  .research-area { grid-template-columns:1fr; }
-  .research-area:nth-child(even) .ra-text, .research-area:nth-child(even) .ra-visual { order:unset; }
-  /* hide desktop nav links, show hamburger */
-  .nav-links { display:none; }
-  .nav-hamburger { display:flex; }
-  /* on mobile, modal is hidden — profile opens as full page instead */
-  .modal-overlay { display:none !important; }
-  .join-positions-grid { grid-template-columns:1fr; gap:1rem; }
-  .join-card-header { flex-direction:column; align-items:flex-start; gap:0.5rem; }
-  .join-card-title { font-size:0.95rem; }
-  .join-card-subtitle { white-space:normal; }
-  .join-card-icon { font-size:1.3rem; }
-  .page-hero { padding:2.5rem 1.2rem 1.8rem; }
-  .join-intro { font-size:0.88rem; }
-  .join-steps { grid-template-columns:1fr; gap:0; }
-  .join-step { display:flex; align-items:flex-start; gap:1rem; text-align:left; padding:0.75rem 0; border-bottom:1px solid var(--border); }
-  .join-step:last-child { border-bottom:none; }
-  .join-step-num { flex-shrink:0; margin:0; }
-  .join-step-content { display:flex; flex-direction:column; gap:0.2rem; }
-  .pub-filter-selects { flex-direction:column; gap:0.7rem; }
-  .pub-select { width:100%; }
-  .cite-modal { max-height:90vh; overflow-y:auto; }
-}
-@media(min-width:769px) {
-  .nav-hamburger { display:none; }
-  .nav-drawer { display:none !important; }
-  /* on desktop, profile page is hidden — modal is used */
-  .profile-page { display:none !important; }
-}
 
 /* ── SUPPRESS MOBILE TAP HIGHLIGHT ── */
 * { -webkit-tap-highlight-color: transparent; }
@@ -473,6 +435,46 @@ a, button, [onclick] { -webkit-tap-highlight-color: transparent; outline: none; 
 
 /* ── FOOTER DEPT ── */
 .footer-dept { font-size:0.76rem; color:rgba(255,255,255,0.42); text-align:center; margin-top:0.25rem; line-height:1.65; font-weight:300; }
+
+
+@media(max-width:768px) {
+  .hero-grid,.pi-inner,.pi-card-full,.contact-layout { grid-template-columns:1fr; }
+  .research-grid { grid-template-columns:repeat(2,1fr); }
+  .people-grid { grid-template-columns:repeat(2,1fr); }
+  .news-grid,.projects-grid { grid-template-columns:1fr; }
+  .gallery-grid { grid-template-columns:1fr 1fr; }
+  .gallery-wide { grid-column:span 1; }
+  .gallery-item .gallery-placeholder div:not(.g-icon) { display:none; }
+  .gallery-item .gallery-placeholder { justify-content:center; }
+  .research-area { grid-template-columns:1fr; }
+  .research-area:nth-child(even) .ra-text, .research-area:nth-child(even) .ra-visual { order:unset; }
+  /* hide desktop nav links, show hamburger */
+  .nav-links { display:none; }
+  .nav-hamburger { display:flex; }
+  /* on mobile, modal is hidden — profile opens as full page instead */
+  .modal-overlay { display:none !important; }
+  .join-positions-grid { grid-template-columns:1fr; gap:1rem; }
+  .join-card-header { flex-direction:column; align-items:flex-start; gap:0.5rem; }
+  .join-card-title { font-size:0.95rem; }
+  .join-card-subtitle { white-space:normal; }
+  .join-card-icon { font-size:1.3rem; }
+  .page-hero { padding:2.5rem 1.2rem 1.8rem; }
+  .join-intro { font-size:0.88rem; }
+  .join-steps { grid-template-columns:1fr; gap:0; }
+  .join-step { display:flex; align-items:flex-start; gap:1rem; text-align:left; padding:0.75rem 0; border-bottom:1px solid var(--border); }
+  .join-step:last-child { border-bottom:none; }
+  .join-step-num { flex-shrink:0; margin:0; }
+  .join-step-content { display:flex; flex-direction:column; gap:0.2rem; }
+  .pub-filter-selects { flex-direction:column; gap:0.7rem; }
+  .pub-select { width:100%; }
+  .cite-modal { max-height:90vh; overflow-y:auto; }
+}
+@media(min-width:769px) {
+  .nav-hamburger { display:none; }
+  .nav-drawer { display:none !important; }
+  /* on desktop, profile page is hidden — modal is used */
+  .profile-page { display:none !important; }
+}
 </style>
 </head>
 <body>
@@ -920,7 +922,7 @@ a, button, [onclick] { -webkit-tap-highlight-color: transparent; outline: none; 
   <footer>
     <div class="footer-center">
       <div class="footer-social-row">
-        <a class="footer-icon-link" href="mailto:ravi.mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+        <a class="footer-icon-link" href="/cdn-cgi/l/email-protection#92e0f3e4fbbcffe7e0f3fed2e1f6e1e6f3e6f7bcf7f6e7" title="Email"><svg><use href="#ico-email"/></svg></a>
         <a class="footer-icon-link" href="https://github.com/murallab01" target="_blank" title="GitHub"><svg><use href="#ico-github"/></svg></a>
       </div>
       <div class="footer-logo">Mural <span>AgriOmics</span> Lab</div>
@@ -1070,7 +1072,7 @@ a, button, [onclick] { -webkit-tap-highlight-color: transparent; outline: none; 
   </footer>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── PROFILE DATA ── */
 const profiles = {
   ermias: { name:'Ermias Assefa', initials:'EA', role:'PhD Student', bio:'Ermias is a PhD student in the Mural AgriOmics Lab focusing on quantitative genetics and genomic prediction in crop species. His research aims to build robust statistical models that can accurately predict complex traits from genomic data, with applications in maize and sorghum breeding programs.', interests:['Quantitative Genetics','Genomic Prediction','BLUP Models','Maize','Sorghum'], github:'#', linkedin:'#', orcid:'#', email:'ermias.assefa@sdstate.edu', pubs:[{title:'Thesis research in progress — publication forthcoming',journal:'Mural AgriOmics Lab · SDSU · 2025'}] },
@@ -1503,15 +1505,8 @@ document.addEventListener('DOMContentLoaded', () => { loadCitationCounts(); });
   <footer>
     <div class="footer-center">
       <div class="footer-social-row">
-        <a class="footer-icon-link" href="mailto:ravi.mural@sdstate.edu" title="Email"><svg><use href="#ico-email"/></svg></a>
+        <a class="footer-icon-link" href="/cdn-cgi/l/email-protection#f58794839cdb9880879499b586918681948190db909180" title="Email"><svg><use href="#ico-email"/></svg></a>
         <a class="footer-icon-link" href="https://github.com/murallab01" target="_blank" title="GitHub"><svg><use href="#ico-github"/></svg></a>
       </div>
       <div class="footer-logo">Mural <span>AgriOmics</span> Lab</div>
-      <div class="footer-dept">Department of Agronomy, Horticulture and Plant Science &nbsp;·&nbsp; South Dakota State University &nbsp;·&nbsp; Brookings, South Dakota 57007</div>
-    </div>
-    <div class="footer-bottom" style="text-align:right;padding-right:2rem;"><div class="footer-text">© 2025 Mural AgriOmics Lab · SDSU</div></div>
-  </footer>
-</div>
-
-</body>
-</html>
+      <div class="footer-dept">Department of Agronomy, Horticulture and Plant Science &nbsp;·&nbsp; South Dakota State University &nbsp;·&nbsp; Brookings, South Dakota 57007</di
