@@ -1356,8 +1356,11 @@ async function parseOrcidWork(group, orcidId) {
     }
   } catch(e) { /* keep default */ }
 
-  const badgeType = type === 'PREPRINT' ? 'Preprint'
-                  : type === 'BOOK_CHAPTER' ? 'Chapter' : 'Journal';
+  // ORCID returns lowercase, hyphenated type values (e.g. 'preprint',
+  // 'book-chapter') — compare case-insensitively rather than assuming casing.
+  const typeLower = (type || '').toLowerCase();
+  const badgeType = typeLower === 'preprint' ? 'Preprint'
+                  : typeLower === 'book-chapter' ? 'Chapter' : 'Journal';
 
   return { title, year, journal, doi, authors, badgeType };
 }
