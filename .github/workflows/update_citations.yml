@@ -1,0 +1,68 @@
+# ══════════════════════════════════════════════════════════════════════════
+# FILE: .github/workflows/update_citations.yml
+#
+# PURPOSE:
+#   Runs monthly (or on manual trigger) to fetch citation counts from
+#   Google Scholar for all lab members who have a Scholar ID configured.
+#   Writes results to data/citation_counts.json, which the website reads
+#   on every page load to display live citation counts per publication.
+#
+# SCHEDULE: Runs on the 1st of every month at 06:00 UTC.
+#
+# HOW TO TRIGGER MANUALLY:
+#   GitHub → your repo → Actions tab → "Update Citation Counts" → Run workflow
+#
+# ✏️  TO ADD A NEW LAB MEMBER:
+#   1. Find their Google Scholar profile URL:
+#      https://scholar.google.com/citations?user=XXXXXXXXXXXX
+#   2. Add their Scholar ID to scripts/fetch_citations.py
+#      in the LAB_MEMBERS list (see flags there).
+#
+# REQUIRED SECRETS: None (uses public Scholar profiles).
+#
+# OUTPUT: data/citation_counts.json
+#   Format: { "10.1234/doi.here": 42, ... }
+# ══════════════════════════════════════════════════════════════════════════
+
+name: Update Citation Counts
+
+on:
+  # ── Run on the 1st of every month at 06:00 UTC ──
+  schedule:
+    - cron: '0 6 1 * *'
+
+  # ── Allow manual trigger from GitHub Actions tab ──
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to commit the updated JSON file
+
+jobs:
+  update-citations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install scholarly requests
+
+      - name: Fetch citation counts
+        run: python scripts/fetch_citations.py
+
+      - name: Commit updated citation counts
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/citation_counts.json
+          # Only commit if the file actually changed
+          git diff --cached --quiet || git commit -m "chore: update citation counts [$(date '+%Y-%m-%d')]"
+          git push
