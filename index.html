@@ -1394,6 +1394,65 @@ function rebuildYearFilter(years) {
     + unique.map(y => '<option value="' + y + '">' + y + '</option>').join('');
 }
 
+/* ── PREPRINT / PUBLISHED-VERSION DEDUPE ──────────────────────────────
+   Many papers are posted to bioRxiv (or similar) before the journal
+   version is out. Once the journal version exists, only that version
+   should be listed — the preprint entry is hidden. Preprints with no
+   later journal version stay listed.
+
+   Matching is by normalized title similarity rather than DOI, since a
+   preprint and its published version always have different DOIs (and
+   sometimes slightly different wording in the title/subtitle). ── */
+function normTitle(t) {
+  return (t || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+function titleWordSet(t) {
+  return new Set(normTitle(t).split(' ').filter(w => w.length > 2));
+}
+function titleSimilarity(a, b) {
+  const wa = titleWordSet(a), wb = titleWordSet(b);
+  if (!wa.size || !wb.size) return 0;
+  let shared = 0;
+  wa.forEach(w => { if (wb.has(w)) shared++; });
+  return shared / new Set([...wa, ...wb]).size;
+}
+function isPreprintPub(pub) {
+  return pub.badgeType === 'Preprint' || /biorxiv|preprint|research square|ssrn/i.test(pub.journal || '');
+}
+// 🚩 Titles that differ too much for the automatic matcher to link
+//    (e.g. a preprint retitled on publication). Map the preprint's DOI
+//    to its published DOI here to force-hide the preprint version.
+const PREPRINT_MERGE_OVERRIDES = {
+  // "Bridging Genomic Gaps..." (bioRxiv) was retitled to "A sorghum-anchored
+  // pan-grass syntenic gene set in grasses" on publication in NAR Genomics
+  // and Bioinformatics — same authors, title changed too much for the
+  // automatic matcher to catch on its own.
+  '10.1101/2024.11.12.623179': '10.1093/nargab/lqag030',
+};
+const TITLE_MATCH_THRESHOLD = 0.55;
+
+function collapsePreprints(pubs) {
+  const preprints    = pubs.filter(isPreprintPub);
+  const nonPreprints  = pubs.filter(p => !isPreprintPub(p));
+
+  // Drop preprints superseded by a published (non-preprint) version —
+  // either an explicit override, or a close title match.
+  let survivors = preprints.filter(pp => {
+    if (pp.doi && PREPRINT_MERGE_OVERRIDES[pp.doi]) return false;
+    return !nonPreprints.some(np => titleSimilarity(pp.title, np.title) >= TITLE_MATCH_THRESHOLD);
+  });
+
+  // Collapse remaining preprints that duplicate each other (e.g. the
+  // same work posted to bioRxiv more than once) — keep the most recent.
+  const collapsed = [];
+  survivors.slice().sort((a,b) => b.year - a.year).forEach(pp => {
+    const dup = collapsed.some(kept => titleSimilarity(kept.title, pp.title) >= TITLE_MATCH_THRESHOLD);
+    if (!dup) collapsed.push(pp);
+  });
+
+  return nonPreprints.concat(collapsed);
+}
+
 /* ── MAIN LOAD FUNCTION ── */
 async function loadPublications() {
   const container = document.getElementById('pub-list-container');
@@ -1429,6 +1488,9 @@ async function loadPublications() {
     seen.add(key);
     return true;
   }).sort((a,b) => b.year - a.year);
+
+  // Hide bioRxiv/preprint entries once a matching journal version exists
+  allPubs = collapsePreprints(allPubs);
 
   if (allPubs.length === 0) {
     if (errorBox) errorBox.style.display = 'block';
@@ -1495,10 +1557,11 @@ function renderStaticFallback(container, citCounts) {
       year:2022, doi:'10.1038/s41477-022-01100-4', badgeType:'Journal' },
   ];
 
-  rebuildYearFilter(staticPubs.map(p => p.year));
+  const dedupedStaticPubs = collapsePreprints(staticPubs);
+  rebuildYearFilter(dedupedStaticPubs.map(p => p.year));
 
   const byYear = {};
-  staticPubs.forEach((pub, i) => {
+  dedupedStaticPubs.forEach((pub, i) => {
     if (!byYear[pub.year]) byYear[pub.year] = [];
     byYear[pub.year].push({ pub, id: 'static_' + i });
   });
