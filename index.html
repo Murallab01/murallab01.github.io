@@ -132,7 +132,8 @@ nav {
 .research-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:0; background:var(--gold); transition: height 0.3s; }
 .research-card:hover { border-color: var(--gold); transform: translateY(-3px); }
 .research-card:hover::before { height: 100%; }
-.rc-icon { font-size: 1.5rem; margin-bottom: 0.7rem; display: block; }
+.rc-icon { display: block; margin-bottom: 0.7rem; }
+.rc-icon svg { width: 26px; height: 26px; color: var(--gold); }
 .rc-title { font-family: 'Playfair Display'; font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
 .rc-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.65; }
 
@@ -244,7 +245,7 @@ nav {
 .ra-number { font-family:'Playfair Display'; font-size:3.5rem; font-weight:700; color:var(--border); line-height:1; margin-bottom:0.4rem; }
 .ra-title { font-family:'Playfair Display'; font-size:1.5rem; font-weight:700; color:var(--navy); margin-bottom:0.8rem; }
 .ra-desc { font-size:0.92rem; color:var(--text-muted); line-height:1.9; font-weight:300; }
-.ra-visual { background:linear-gradient(135deg,var(--navy),var(--navy-light)); border-radius:4px; height:240px; display:flex; align-items:center; justify-content:center; font-size:3.5rem; }
+.ra-visual { background:linear-gradient(135deg,var(--navy),var(--navy-light)); background-size:cover; background-position:center; border-radius:4px; height:240px; display:flex; align-items:center; justify-content:center; }
 .ra-tags { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:1rem; }
 .ra-tag { background:var(--bg-light); color:var(--navy); border:1px solid var(--border); padding:0.2rem 0.7rem; border-radius:2px; font-size:0.72rem; font-family:'DM Mono'; letter-spacing:0.04em; }
 .ra-pubs { margin-top:1.6rem; }
@@ -486,6 +487,11 @@ a, button, [onclick] { -webkit-tap-highlight-color: transparent; outline: none; 
   <symbol id="ico-scholar" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V17c0 1.1 2.24 2 5 2s5-.9 5-2v-5.82L17 11V9.09L19 10V14h2V9L12 3zm3.5 11.71c-.42.4-1.87.79-3.5.79s-3.08-.39-3.5-.79V13l3.5 1.91L15.5 13v1.71z"/></symbol>
   <symbol id="ico-orcid" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm-1.374 4.737h2.748c.325 0 .588.263.588.588s-.263.588-.588.588h-2.748a.588.588 0 010-1.176zm-.588 3.529h3.924c.325 0 .588.263.588.588v9.412a.588.588 0 01-.588.588h-3.924a.588.588 0 010-1.176h1.568V9.441H9.449a.588.588 0 010-1.176z"/></symbol>
   <symbol id="ico-email" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></symbol>
+  <symbol id="ico-dna" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3c0 4.5 10 4.5 10 9s-10 4.5-10 9"/><path d="M17 3c0 4.5-10 4.5-10 9s10 4.5 10 9"/><path d="M8.3 6h7.4M8 12h8M8.3 18h7.4"/></symbol>
+  <symbol id="ico-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4C10.5 4.5 5 10 4.5 19.5C14 19 19.5 13.5 20 4z"/><path d="M5.5 18.5L15 9"/></symbol>
+  <symbol id="ico-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5C3 7.4 3.9 6.5 5 6.5h1.6l1.1-1.8c.3-.5.9-.9 1.5-.9h3.6c.6 0 1.2.4 1.5.9l1.1 1.8H17c1.1 0 2 .9 2 2V17c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V8.5z"/><circle cx="12" cy="13" r="3.4"/></symbol>
+  <symbol id="ico-chip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1.2"/><path d="M9.5 7V3.2M12 7V3.2M14.5 7V3.2M9.5 21v-3.8M12 21v-3.8M14.5 21v-3.8M7 9.5H3.2M7 12H3.2M7 14.5H3.2M20.8 9.5H17M20.8 12H17M20.8 14.5H17"/></symbol>
+  <symbol id="ico-network" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="12" cy="11.2" r="1.8"/><path d="M7.6 7.2L10.6 9.8M16.4 7.2L13.4 9.8M12 13v3"/></symbol>
 </svg>
 
 <!-- ── NAVIGATION ── -->
@@ -568,11 +574,11 @@ a, button, [onclick] { -webkit-tap-highlight-color: transparent; outline: none; 
       <div class="divider"></div>
       <p class="section-subtitle">Our lab integrates statistical genetics, genomics, phenotyping, AI, and data science to understand how genetic variation shapes plant traits — and to turn those insights into tools for crop improvement.</p>
       <div class="research-grid">
-        <div class="research-card" onclick="showPageWithFilter('publications','quantitative-genetics')"><span class="rc-icon">🧬</span><div class="rc-title">Quantitative Genetics</div><p class="rc-desc">GWAS, QTL mapping, and genomic prediction for complex traits.</p></div>
-        <div class="research-card" onclick="showPageWithFilter('publications','genomics')"><span class="rc-icon">🌱</span><div class="rc-title">Plant Genomics</div><p class="rc-desc">Large-scale genomic datasets to understand gene function and population structure.</p></div>
-        <div class="research-card" onclick="showPageWithFilter('publications','phenotyping')"><span class="rc-icon">📷</span><div class="rc-title">HTP Phenotyping</div><p class="rc-desc">Sensor and image-driven approaches to measure plant traits at scale.</p></div>
-        <div class="research-card" onclick="showPageWithFilter('publications','computational')"><span class="rc-icon">💻</span><div class="rc-title">Computational Tools</div><p class="rc-desc">Bioinformatics pipelines and statistical frameworks for big data.</p></div>
-        <div class="research-card" onclick="showPageWithFilter('publications','ai-ml')"><span class="rc-icon">🤖</span><div class="rc-title">AI &amp; Machine Learning</div><p class="rc-desc">Deep learning and AI models for genomic prediction and crop phenotyping.</p></div>
+        <div class="research-card" onclick="showPageWithFilter('publications','quantitative-genetics')"><span class="rc-icon"><svg viewBox="0 0 24 24"><use href="#ico-dna"/></svg></span><div class="rc-title">Quantitative Genetics</div><p class="rc-desc">GWAS, QTL mapping, and genomic prediction for complex traits.</p></div>
+        <div class="research-card" onclick="showPageWithFilter('publications','genomics')"><span class="rc-icon"><svg viewBox="0 0 24 24"><use href="#ico-leaf"/></svg></span><div class="rc-title">Plant Genomics</div><p class="rc-desc">Large-scale genomic datasets to understand gene function and population structure.</p></div>
+        <div class="research-card" onclick="showPageWithFilter('publications','phenotyping')"><span class="rc-icon"><svg viewBox="0 0 24 24"><use href="#ico-camera"/></svg></span><div class="rc-title">HTP Phenotyping</div><p class="rc-desc">Sensor and image-driven approaches to measure plant traits at scale.</p></div>
+        <div class="research-card" onclick="showPageWithFilter('publications','computational')"><span class="rc-icon"><svg viewBox="0 0 24 24"><use href="#ico-chip"/></svg></span><div class="rc-title">Computational Tools</div><p class="rc-desc">Bioinformatics pipelines and statistical frameworks for big data.</p></div>
+        <div class="research-card" onclick="showPageWithFilter('publications','ai-ml')"><span class="rc-icon"><svg viewBox="0 0 24 24"><use href="#ico-network"/></svg></span><div class="rc-title">AI &amp; Machine Learning</div><p class="rc-desc">Deep learning and AI models for genomic prediction and crop phenotyping.</p></div>
       </div>
     </div>
   </div>
@@ -717,11 +723,11 @@ a, button, [onclick] { -webkit-tap-highlight-color: transparent; outline: none; 
           <div class="ra-pub-mini"><div class="ra-pub-mini-title">Dissecting the genetic architecture of nitrogen use efficiency in maize using a multi-environment framework</div><div class="ra-pub-mini-journal">Theoretical and Applied Genetics · 2023 · Mural RV, Yang J, et al.</div></div>
         </div>
       </div>
-      <div class="ra-visual">🧬</div>
+      <div class="ra-visual" style="background-image:url('images/ra-quantgen.jpg')"></div>
     </div>
 
     <div class="research-area">
-      <div class="ra-visual">🌱</div>
+      <div class="ra-visual" style="background-image:url('images/ra-genomics.jpg')"></div>
       <div class="ra-text">
         <div class="ra-number">02</div>
         <div class="ra-title">Plant Genomics</div>
@@ -745,11 +751,11 @@ a, button, [onclick] { -webkit-tap-highlight-color: transparent; outline: none; 
           <div class="ra-pub-mini"><div class="ra-pub-mini-title">High-throughput phenotyping using UAV-based multispectral imaging for field crop assessment</div><div class="ra-pub-mini-journal">Field Crops Research · 2023 · Mural RV, et al.</div></div>
         </div>
       </div>
-      <div class="ra-visual">📷</div>
+      <div class="ra-visual" style="background-image:url('images/ra-phenotyping.jpg')"></div>
     </div>
 
     <div class="research-area">
-      <div class="ra-visual">💻</div>
+      <div class="ra-visual" style="background-image:url('images/ra-computational.jpg')"></div>
       <div class="ra-text">
         <div class="ra-number">04</div>
         <div class="ra-title">Computational &amp; Data Science</div>
@@ -774,7 +780,7 @@ a, button, [onclick] { -webkit-tap-highlight-color: transparent; outline: none; 
           <div class="ra-pub-mini"><div class="ra-pub-mini-title">Convolutional neural networks for automated plant trait extraction from field images</div><div class="ra-pub-mini-journal">Computers and Electronics in Agriculture · 2023 · Mural RV, et al.</div></div>
         </div>
       </div>
-      <div class="ra-visual">🤖</div>
+      <div class="ra-visual" style="background-image:url('images/ra-aiml.jpg')"></div>
     </div>
 
   </div></div>
